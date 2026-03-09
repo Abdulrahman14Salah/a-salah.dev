@@ -21,9 +21,9 @@ define('MYTHEME_SLUG', 'my-theme');
 |--------------------------------------------------------------------------
 */
 
-define('MYTHEME_GITHUB_USER', 'YOUR_GITHUB_USERNAME');
+define('MYTHEME_GITHUB_USER', 'Abdulrahman14Salah');
 
-define('MYTHEME_GITHUB_REPO', 'my-theme');
+define('MYTHEME_GITHUB_REPO', 'a-salah.dev');
 
 
 /*
@@ -42,3 +42,7 @@ define('MYTHEME_UPDATE_API', 'https://api.github.com/repos/' . MYTHEME_GITHUB_US
 */
 
 define('MYTHEME_THEME_SITE', 'https://your-domain.com');
+
+
+
+new MyTheme_GitHub_Updater();
