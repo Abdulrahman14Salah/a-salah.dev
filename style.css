@@ -1,0 +1,22 @@
+/*
+Theme Name: My Theme
+Theme URI: https://github.com/YOUR_USERNAME/my-theme
+Author: Abdulrahman Salah
+Author URI: https://a-salah.dev
+Description: Professional lightweight WordPress theme built with modern standards.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 7.4
+Text Domain: my-theme
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Tags: custom-theme, performance, seo
+*/
+
+/* Theme base styles */
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
