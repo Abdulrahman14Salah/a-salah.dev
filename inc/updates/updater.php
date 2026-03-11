@@ -148,30 +148,32 @@ class MyTheme_GitHub_Updater
     }
 
 
-    public function rename_theme_folder($result, $hook_extra, $upgrader)
+    public function rename_theme_folder($response, $hook_extra, $result)
     {
 
         global $wp_filesystem;
 
         if (!isset($hook_extra['theme'])) {
-            return $result;
+            return $response;
         }
 
         if ($hook_extra['theme'] !== $this->theme_slug) {
-            return $result;
+            return $response;
         }
 
-        $theme_dir = get_theme_root();
+        if (!$wp_filesystem) {
+            return $response;
+        }
 
-        $correct = trailingslashit($theme_dir) . $this->theme_slug;
+        $correct_dir = trailingslashit(get_theme_root()) . $this->theme_slug;
 
-        $installed = $result['destination'];
+        $installed_dir = $result['destination'];
 
-        if ($installed !== $correct && $wp_filesystem) {
+        if ($installed_dir !== $correct_dir) {
 
-            $wp_filesystem->move($installed, $correct);
+            $wp_filesystem->move($installed_dir, $correct_dir);
 
-            $result['destination'] = $correct;
+            $result['destination'] = $correct_dir;
         }
 
         return $result;
