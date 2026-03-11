@@ -19,7 +19,7 @@ jobs:
 
       - name: Update style.css version
         run: |
-          sed -i "s/^Version:.*/Version: $VERSION/" style.css
+          awk -v v="$VERSION" '/^Version:/ {$0="Version: "v}1' style.css > tmp && mv tmp style.css
 
       - name: Remove git files
         run: |
