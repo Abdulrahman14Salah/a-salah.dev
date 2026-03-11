@@ -1,0 +1,33 @@
+name: Build Theme ZIP
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Prepare theme folder
+        run: |
+          mkdir theme
+          cp -R * theme/
+          rm -rf theme/.git
+          rm -rf theme/.github
+
+      - name: Rename folder
+        run: |
+          mv theme a-salah.dev
+
+      - name: Zip theme
+        run: |
+          zip -r a-salah.dev.zip a-salah.dev
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: a-salah.dev.zip
