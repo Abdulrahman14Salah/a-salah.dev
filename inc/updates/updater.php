@@ -22,6 +22,13 @@ class MyTheme_GitHub_Updater
             'pre_set_site_transient_update_themes',
             [$this, 'check_update']
         );
+
+        add_filter(
+            'themes_api',
+            [$this, 'theme_info'],
+            10,
+            3
+        );
     }
 
     public function check_update($transient)
@@ -31,7 +38,7 @@ class MyTheme_GitHub_Updater
             return $transient;
         }
 
-        // cache GitHub response
+        // GitHub release cache
         $release = get_transient('mytheme_github_release');
 
         if (!$release) {
@@ -54,15 +61,16 @@ class MyTheme_GitHub_Updater
                 wp_remote_retrieve_body($response)
             );
 
+            if (!$release || !isset($release->tag_name)) {
+                return $transient;
+            }
+
+            // cache for testing (1 second)
             set_transient(
                 'mytheme_github_release',
                 $release,
-                HOUR_IN_SECONDS
+                1
             );
-        }
-
-        if (!isset($release->tag_name)) {
-            return $transient;
         }
 
         $latest_version  = ltrim($release->tag_name, 'v');
@@ -97,5 +105,40 @@ class MyTheme_GitHub_Updater
         }
 
         return $transient;
+    }
+
+    public function theme_info($result, $action, $args)
+    {
+
+        if ($action !== 'theme_information') {
+            return $result;
+        }
+
+        if (!isset($args->slug) || $args->slug !== $this->theme_slug) {
+            return $result;
+        }
+
+        $release = get_transient('mytheme_github_release');
+
+        if (!$release) {
+            return $result;
+        }
+
+        $latest_version = ltrim($release->tag_name, 'v');
+
+        $info = new stdClass();
+
+        $info->name       = $this->theme_data->get('Name');
+        $info->slug       = $this->theme_slug;
+        $info->version    = $latest_version;
+        $info->author     = $this->theme_data->get('Author');
+        $info->homepage   = $release->html_url;
+
+        $info->sections = [
+            'description' => $this->theme_data->get('Description'),
+            'changelog'   => isset($release->body) ? nl2br($release->body) : '',
+        ];
+
+        return $info;
     }
 }
