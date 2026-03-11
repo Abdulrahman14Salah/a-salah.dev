@@ -34,9 +34,12 @@ jobs:
 
       - name: Zip theme
         run: |
-          zip -r a-salah.dev.zip a-salah.dev
+          zip -r a-salah.zip a-salah.dev
 
       - name: Upload ZIP
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ github.ref_name }}
           files: a-salah.dev.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
