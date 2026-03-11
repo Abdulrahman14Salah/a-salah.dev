@@ -9,25 +9,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare theme folder
+      - name: Remove Git files
         run: |
-          mkdir theme
-          cp -R * theme/
-          rm -rf theme/.git
-          rm -rf theme/.github
+          rm -rf .git
+          rm -rf .github
 
-      - name: Rename folder
+      - name: Create theme folder
         run: |
-          mv theme a-salah.dev
+          mkdir a-salah.dev
+          shopt -s extglob
+          mv !(a-salah.dev) a-salah.dev/
 
       - name: Zip theme
         run: |
           zip -r a-salah.dev.zip a-salah.dev
 
-      - name: Upload to release
+      - name: Upload ZIP to release
         uses: softprops/action-gh-release@v1
         with:
           files: a-salah.dev.zip
