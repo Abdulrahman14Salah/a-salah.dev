@@ -25,20 +25,20 @@ jobs:
           ' style.css > tmp
           mv tmp style.css
 
-      - name: Create build folder
+      - name: Create theme folder
         run: |
-          mkdir build
-          rsync -av ./ build/ \
+          mkdir a-salah.dev
+          rsync -av ./ a-salah.dev/ \
           --exclude=".git" \
           --exclude=".github" \
           --exclude="node_modules" \
-          --exclude="build"
+          --exclude="a-salah.dev"
 
-      - name: Zip theme
+      - name: Create zip package
         run: |
-          zip -r a-salah.dev.zip build/*
+          zip -r a-salah.dev.zip a-salah.dev
 
-      - name: Upload ZIP
+      - name: Upload ZIP to Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
