@@ -1,6 +1,6 @@
 <?php
 
-if (! defined('ABSPATH')) {
+if (!defined('ABSPATH')) {
     exit;
 }
 
@@ -22,12 +22,12 @@ class MyTheme_GitHub_Updater
 
         add_filter(
             'pre_set_site_transient_update_themes',
-            array($this, 'check_update')
+            [$this, 'check_update']
         );
 
         add_filter(
             'upgrader_source_selection',
-            array($this, 'fix_github_folder'),
+            [$this, 'fix_github_folder'],
             10,
             4
         );
@@ -40,25 +40,37 @@ class MyTheme_GitHub_Updater
             return $transient;
         }
 
-        $response = wp_remote_get(
-            $this->github_api_url,
-            array(
-                'headers' => array(
-                    'Accept' => 'application/vnd.github+json',
-                    'User-Agent' => 'WordPress'
-                )
-            )
-        );
+        // cache release data
+        $release = get_transient('mytheme_github_release');
 
-        if (is_wp_error($response)) {
-            return $transient;
+        if (!$release) {
+
+            $response = wp_remote_get(
+                $this->github_api_url,
+                [
+                    'headers' => [
+                        'Accept' => 'application/vnd.github+json',
+                        'User-Agent' => 'WordPress'
+                    ]
+                ]
+            );
+
+            if (is_wp_error($response)) {
+                return $transient;
+            }
+
+            $release = json_decode(
+                wp_remote_retrieve_body($response)
+            );
+
+            set_transient(
+                'mytheme_github_release',
+                $release,
+                6 * HOUR_IN_SECONDS
+            );
         }
 
-        $release = json_decode(
-            wp_remote_retrieve_body($response)
-        );
-
-        if (! isset($release->tag_name)) {
+        if (!isset($release->tag_name)) {
             return $transient;
         }
 
@@ -68,12 +80,19 @@ class MyTheme_GitHub_Updater
 
         if (version_compare($current_version, $latest_version, '<')) {
 
-            $update = array(
+            $package = sprintf(
+                'https://github.com/%s/%s/archive/refs/tags/%s.zip',
+                MYTHEME_GITHUB_USER,
+                MYTHEME_GITHUB_REPO,
+                $release->tag_name
+            );
+
+            $update = [
                 'theme'       => $this->theme_slug,
                 'new_version' => $latest_version,
                 'url'         => $release->html_url,
-                'package'     => $release->zipball_url,
-            );
+                'package'     => $package,
+            ];
 
             $transient->response[$this->theme_slug] = $update;
         }
@@ -88,16 +107,34 @@ class MyTheme_GitHub_Updater
             return $source;
         }
 
-        if ($hook_extra['theme'] !== get_template()) {
+        if ($hook_extra['theme'] !== $this->theme_slug) {
             return $source;
         }
 
         global $wp_filesystem;
 
-        $corrected_source = trailingslashit($remote_source) . get_template();
+        if (!$wp_filesystem) {
+            return $source;
+        }
 
-        if ($wp_filesystem->move($source, $corrected_source)) {
-            return $corrected_source;
+        $files = $wp_filesystem->dirlist($source);
+
+        if (!$files) {
+            return $source;
+        }
+
+        foreach ($files as $file => $details) {
+
+            $possible = trailingslashit($source) . $file;
+
+            if ($wp_filesystem->exists($possible . '/style.css')) {
+
+                $corrected = trailingslashit($remote_source) . $this->theme_slug;
+
+                $wp_filesystem->move($possible, $corrected);
+
+                return $corrected;
+            }
         }
 
         return $source;
