@@ -22,26 +22,29 @@ define('MYTHEME_INC', MYTHEME_DIR . '/inc');
 |--------------------------------------------------------------------------
 */
 
-function mytheme_autoload_inc_files()
+function a_salah_autoload_inc()
 {
 
-    if (! is_dir(MYTHEME_INC)) {
-        return;
-    }
+    $inc_dir = get_template_directory() . '/inc';
 
     $iterator = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator(
-            MYTHEME_INC,
-            RecursiveDirectoryIterator::SKIP_DOTS
-        )
+        new RecursiveDirectoryIterator($inc_dir, RecursiveDirectoryIterator::SKIP_DOTS)
     );
 
     foreach ($iterator as $file) {
 
-        if ($file->isFile() && 'php' === $file->getExtension()) {
+        if ($file->getExtension() === 'php') {
             require_once $file->getRealPath();
         }
     }
 }
 
-mytheme_autoload_inc_files();
+a_salah_autoload_inc();
+
+
+add_action('after_setup_theme', function () {
+
+    if (class_exists('MyTheme_GitHub_Updater')) {
+        new MyTheme_GitHub_Updater();
+    }
+});

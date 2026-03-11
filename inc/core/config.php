@@ -42,7 +42,3 @@ define('MYTHEME_UPDATE_API', 'https://api.github.com/repos/' . MYTHEME_GITHUB_US
 */
 
 define('MYTHEME_THEME_SITE', 'https://your-domain.com');
-
-
-
-new MyTheme_GitHub_Updater();

@@ -84,14 +84,20 @@ class MyTheme_GitHub_Updater
     public function fix_github_folder($source, $remote_source, $upgrader, $hook_extra)
     {
 
-        if (isset($hook_extra['theme']) && $hook_extra['theme'] === $this->theme_slug) {
+        if (!isset($hook_extra['theme'])) {
+            return $source;
+        }
 
-            $corrected_source = trailingslashit($remote_source) . $this->theme_slug;
+        if ($hook_extra['theme'] !== get_template()) {
+            return $source;
+        }
 
-            if (rename($source, $corrected_source)) {
+        global $wp_filesystem;
 
-                return $corrected_source;
-            }
+        $corrected_source = trailingslashit($remote_source) . get_template();
+
+        if ($wp_filesystem->move($source, $corrected_source)) {
+            return $corrected_source;
         }
 
         return $source;
