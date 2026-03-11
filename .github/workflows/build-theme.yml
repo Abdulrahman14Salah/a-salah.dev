@@ -21,17 +21,19 @@ jobs:
         run: |
           awk -v v="$VERSION" '/^Version:/ {$0="Version: "v}1' style.css > tmp && mv tmp style.css
 
-      - name: Create theme folder
-        run: |
-          mkdir a-salah.dev
-          rsync -av ./ a-salah.dev/ \
-          --exclude=".git" \
-          --exclude=".github" \
-          --exclude="node_modules"
+          - name: Create build folder
+          run: |
+            mkdir build
+            rsync -av ./ build/ \
+            --exclude=".git" \
+            --exclude=".github" \
+            --exclude="node_modules" \
+            --exclude="build"
 
       - name: Zip theme
         run: |
-          zip -r a-salah.dev.zip a-salah.dev
+          cd build
+          zip -r ../a-salah.dev.zip .
 
       - name: Upload ZIP
         uses: softprops/action-gh-release@v1
