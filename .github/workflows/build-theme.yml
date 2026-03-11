@@ -13,22 +13,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get version from tag
-        run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
 
       - name: Update style.css version
         run: |
-          awk -v v="$VERSION" '/^Version:/ {$0="Version: "v}1' style.css > tmp && mv tmp style.css
-
-          - name: Create build folder
-          run: |
-            mkdir build
-            rsync -av ./ build/ \
-            --exclude=".git" \
-            --exclude=".github" \
-            --exclude="node_modules" \
-            --exclude="build"
+          awk -v v="$VERSION" '
+          BEGIN{found=0}
+          /^Version:/ {$0="Version: " v; found=1}
+          {print}
+          END{if(!found) print "Version: " v}
+          ' style.css > tmp
+          mv tmp style.css
 
       - name: Zip theme
         run: |
