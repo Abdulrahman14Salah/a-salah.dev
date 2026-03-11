@@ -73,7 +73,7 @@ class MyTheme_GitHub_Updater
             set_transient(
                 'mytheme_github_release',
                 $release,
-                6 * HOUR_IN_SECONDS
+                MINUTE_IN_SECONDS
             );
         }
 
