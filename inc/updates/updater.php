@@ -31,6 +31,13 @@ class MyTheme_GitHub_Updater
             10,
             4
         );
+
+        add_filter(
+            'upgrader_post_install',
+            [$this, 'rename_theme_folder'],
+            10,
+            3
+        );
     }
 
     public function check_update($transient)
@@ -102,6 +109,7 @@ class MyTheme_GitHub_Updater
 
     public function fix_github_folder($source, $remote_source, $upgrader, $hook_extra)
     {
+
         if (!isset($hook_extra['theme'])) {
             return $source;
         }
@@ -116,15 +124,56 @@ class MyTheme_GitHub_Updater
             return $source;
         }
 
-        $corrected = trailingslashit($remote_source) . $this->theme_slug;
+        $files = $wp_filesystem->dirlist($source);
 
-        if (basename($source) !== $this->theme_slug) {
+        if (!$files) {
+            return $source;
+        }
 
-            $wp_filesystem->move($source, $corrected);
+        foreach ($files as $file => $details) {
 
-            return $corrected;
+            $possible = trailingslashit($source) . $file;
+
+            if ($wp_filesystem->exists($possible . '/style.css')) {
+
+                $corrected = trailingslashit($remote_source) . $this->theme_slug;
+
+                $wp_filesystem->move($possible, $corrected);
+
+                return $corrected;
+            }
         }
 
         return $source;
+    }
+
+
+    public function rename_theme_folder($result, $hook_extra, $upgrader)
+    {
+
+        global $wp_filesystem;
+
+        if (!isset($hook_extra['theme'])) {
+            return $result;
+        }
+
+        if ($hook_extra['theme'] !== $this->theme_slug) {
+            return $result;
+        }
+
+        $theme_dir = get_theme_root();
+
+        $correct = trailingslashit($theme_dir) . $this->theme_slug;
+
+        $installed = $result['destination'];
+
+        if ($installed !== $correct && $wp_filesystem) {
+
+            $wp_filesystem->move($installed, $correct);
+
+            $result['destination'] = $correct;
+        }
+
+        return $result;
     }
 }
