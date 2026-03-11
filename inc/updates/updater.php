@@ -102,7 +102,6 @@ class MyTheme_GitHub_Updater
 
     public function fix_github_folder($source, $remote_source, $upgrader, $hook_extra)
     {
-
         if (!isset($hook_extra['theme'])) {
             return $source;
         }
@@ -117,24 +116,13 @@ class MyTheme_GitHub_Updater
             return $source;
         }
 
-        $files = $wp_filesystem->dirlist($source);
+        $corrected = trailingslashit($remote_source) . $this->theme_slug;
 
-        if (!$files) {
-            return $source;
-        }
+        if (basename($source) !== $this->theme_slug) {
 
-        foreach ($files as $file => $details) {
+            $wp_filesystem->move($source, $corrected);
 
-            $possible = trailingslashit($source) . $file;
-
-            if ($wp_filesystem->exists($possible . '/style.css')) {
-
-                $corrected = trailingslashit($remote_source) . $this->theme_slug;
-
-                $wp_filesystem->move($possible, $corrected);
-
-                return $corrected;
-            }
+            return $corrected;
         }
 
         return $source;
