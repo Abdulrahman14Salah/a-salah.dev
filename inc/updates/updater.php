@@ -150,7 +150,6 @@ class MyTheme_GitHub_Updater
 
     public function rename_theme_folder($response, $hook_extra, $result)
     {
-
         global $wp_filesystem;
 
         if (!isset($hook_extra['theme'])) {
@@ -165,14 +164,18 @@ class MyTheme_GitHub_Updater
             return $response;
         }
 
-        $correct_dir = trailingslashit(get_theme_root()) . $this->theme_slug;
+        $theme_dir   = get_theme_root();
+        $correct_dir = trailingslashit($theme_dir) . $this->theme_slug;
+        $installed   = $result['destination'];
 
-        $installed_dir = $result['destination'];
+        // إذا كان المجلد الصحيح موجود احذفه أولاً
+        if ($wp_filesystem->exists($correct_dir)) {
+            $wp_filesystem->delete($correct_dir, true);
+        }
 
-        if ($installed_dir !== $correct_dir) {
-
-            $wp_filesystem->move($installed_dir, $correct_dir);
-
+        // ثم انقل المجلد الجديد
+        if ($installed !== $correct_dir) {
+            $wp_filesystem->move($installed, $correct_dir);
             $result['destination'] = $correct_dir;
         }
 
