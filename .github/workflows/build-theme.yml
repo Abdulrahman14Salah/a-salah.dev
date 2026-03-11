@@ -36,8 +36,7 @@ jobs:
 
       - name: Zip theme
         run: |
-          cd build
-          zip -r ../a-salah.dev.zip .
+          zip -r a-salah.dev.zip build/*
 
       - name: Upload ZIP
         uses: softprops/action-gh-release@v1
