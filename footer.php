@@ -8,7 +8,7 @@ if (! defined('ABSPATH')) {
 
 </main>
 
-<footer class="site-footer">
+<footer class="site-footer" style="background-color: blue;">
 
     <div class="container">
 
