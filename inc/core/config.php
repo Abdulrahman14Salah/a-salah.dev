@@ -25,6 +25,8 @@ define('MYTHEME_GITHUB_USER', 'Abdulrahman14Salah');
 
 define('MYTHEME_GITHUB_REPO', 'a-salah.dev');
 
+define('MYTHEME_GITHUB_TOKEN', getenv('MYTHEME_GITHUB_TOKEN') ?: '');
+
 
 /*
 |--------------------------------------------------------------------------

@@ -7,6 +7,9 @@ if (!defined('ABSPATH')) {
 class MyTheme_GitHub_Updater
 {
 
+    private const RELEASE_TRANSIENT_KEY = 'mytheme_github_release';
+    private const RELEASE_CACHE_TTL = 6 * HOUR_IN_SECONDS;
+
     private $theme_slug;
     private $theme_data;
     private $github_api_url;
@@ -29,80 +32,56 @@ class MyTheme_GitHub_Updater
             10,
             3
         );
+
+        add_filter(
+            'http_request_args',
+            [$this, 'add_github_auth_headers'],
+            10,
+            2
+        );
+
+        add_action(
+            'upgrader_process_complete',
+            [$this, 'clear_release_cache_after_theme_upgrade'],
+            10,
+            2
+        );
     }
 
     public function check_update($transient)
     {
 
-        if (empty($transient->checked)) {
+        if (empty($transient->checked) || !is_object($transient)) {
             return $transient;
         }
 
-        // GitHub release cache
-        $release = get_transient('mytheme_github_release');
+        $release = $this->get_latest_release();
 
         if (!$release) {
-
-            $response = wp_remote_get(
-                $this->github_api_url,
-                [
-                    'headers' => [
-                        'Accept' => 'application/vnd.github+json',
-                        'User-Agent' => 'WordPress'
-                    ]
-                ]
-            );
-
-            if (is_wp_error($response)) {
-                return $transient;
-            }
-
-            $release = json_decode(
-                wp_remote_retrieve_body($response)
-            );
-
-            if (!$release || !isset($release->tag_name)) {
-                return $transient;
-            }
-
-            // cache for testing (1 second)
-            set_transient(
-                'mytheme_github_release',
-                $release,
-                1
-            );
+            return $transient;
         }
 
-        $latest_version  = ltrim($release->tag_name, 'v');
+        $latest_version  = ltrim((string) $release->tag_name, 'v');
         $current_version = $this->theme_data->get('Version');
 
-        if (version_compare($current_version, $latest_version, '<')) {
-
-            $package = '';
-
-            if (!empty($release->assets)) {
-                foreach ($release->assets as $asset) {
-
-                    if ($asset->name === 'a-salah.dev.zip') {
-                        $package = $asset->browser_download_url;
-                        break;
-                    }
-                }
-            }
-
-            if (!$package) {
-                return $transient;
-            }
-
-            $update = [
-                'theme'       => $this->theme_slug,
-                'new_version' => $latest_version,
-                'url'         => $release->html_url,
-                'package'     => $package,
-            ];
-
-            $transient->response[$this->theme_slug] = $update;
+        if ($latest_version === '' || !version_compare($current_version, $latest_version, '<')) {
+            return $transient;
         }
+
+        $package = $this->resolve_package_url($release);
+
+        if (!$package) {
+            return $transient;
+        }
+
+        $update = [
+            'theme'       => $this->theme_slug,
+            'new_version' => $latest_version,
+            'url'         => esc_url_raw((string) ($release->html_url ?? '')),
+            'package'     => esc_url_raw($package),
+        ];
+
+        $transient->response[$this->theme_slug] = $update;
 
         return $transient;
     }
@@ -118,27 +97,140 @@ class MyTheme_GitHub_Updater
             return $result;
         }
 
-        $release = get_transient('mytheme_github_release');
+        $release = $this->get_latest_release();
 
         if (!$release) {
             return $result;
         }
 
-        $latest_version = ltrim($release->tag_name, 'v');
+        $latest_version = ltrim((string) $release->tag_name, 'v');
 
         $info = new stdClass();
 
-        $info->name       = $this->theme_data->get('Name');
-        $info->slug       = $this->theme_slug;
-        $info->version    = $latest_version;
-        $info->author     = $this->theme_data->get('Author');
-        $info->homepage   = $release->html_url;
+        $info->name     = $this->theme_data->get('Name');
+        $info->slug     = $this->theme_slug;
+        $info->version  = $latest_version;
+        $info->author   = $this->theme_data->get('Author');
+        $info->homepage = esc_url_raw((string) ($release->html_url ?? ''));
+
+        $release_notes = isset($release->body)
+            ? wp_kses_post(nl2br((string) $release->body))
+            : '';
 
         $info->sections = [
-            'description' => $this->theme_data->get('Description'),
-            'changelog'   => isset($release->body) ? nl2br($release->body) : '',
+            'description' => wp_kses_post($this->theme_data->get('Description')),
+            'changelog'   => $release_notes,
         ];
 
         return $info;
+    }
+
+    public function add_github_auth_headers($args, $url)
+    {
+
+        if (!is_string($url) || strpos($url, 'api.github.com/') === false) {
+            return $args;
+        }
+
+        if (!isset($args['headers']) || !is_array($args['headers'])) {
+            $args['headers'] = [];
+        }
+
+        $args['headers']['User-Agent'] = 'WordPress/' . get_bloginfo('version') . '; ' . home_url('/');
+        $args['headers']['Accept'] = 'application/vnd.github+json';
+
+        if (!empty(MYTHEME_GITHUB_TOKEN)) {
+            $args['headers']['Authorization'] = 'Bearer ' . MYTHEME_GITHUB_TOKEN;
+        }
+
+        if (strpos($url, '/releases/assets/') !== false) {
+            $args['headers']['Accept'] = 'application/octet-stream';
+        }
+
+        return $args;
+    }
+
+    public function clear_release_cache_after_theme_upgrade($upgrader, $hook_extra)
+    {
+
+        if (!is_array($hook_extra) || ($hook_extra['type'] ?? '') !== 'theme') {
+            return;
+        }
+
+        if (($hook_extra['action'] ?? '') !== 'update') {
+            return;
+        }
+
+        delete_transient(self::RELEASE_TRANSIENT_KEY);
+    }
+
+    private function get_latest_release()
+    {
+
+        $release = get_transient(self::RELEASE_TRANSIENT_KEY);
+
+        if ($release) {
+            return $release;
+        }
+
+        $response = wp_safe_remote_get(
+            esc_url_raw($this->github_api_url),
+            [
+                'timeout' => 15,
+                'headers' => [
+                    'Accept' => 'application/vnd.github+json',
+                    'User-Agent' => 'WordPress/' . get_bloginfo('version') . '; ' . home_url('/'),
+                ],
+            ]
+        );
+
+        if (is_wp_error($response)) {
+            return false;
+        }
+
+        $status_code = (int) wp_remote_retrieve_response_code($response);
+
+        if ($status_code < 200 || $status_code >= 300) {
+            return false;
+        }
+
+        $release = json_decode(wp_remote_retrieve_body($response));
+
+        if (!$release || !isset($release->tag_name)) {
+            return false;
+        }
+
+        set_transient(
+            self::RELEASE_TRANSIENT_KEY,
+            $release,
+            self::RELEASE_CACHE_TTL
+        );
+
+        return $release;
+    }
+
+    private function resolve_package_url($release)
+    {
+
+        if (empty($release->assets) || !is_array($release->assets)) {
+            return '';
+        }
+
+        foreach ($release->assets as $asset) {
+
+            if (($asset->name ?? '') !== 'a-salah.dev.zip') {
+                continue;
+            }
+
+            if (!empty($asset->url)) {
+                return (string) $asset->url;
+            }
+
+            if (!empty($asset->browser_download_url)) {
+                return (string) $asset->browser_download_url;
+            }
+        }
+
+        return '';
     }
 }
