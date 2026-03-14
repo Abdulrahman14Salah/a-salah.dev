@@ -12,7 +12,7 @@ if (! defined('ABSPATH')) {
 
 define('MYTHEME_NAME', 'My Theme');
 
-define('MYTHEME_SLUG', 'my-theme');
+define('MYTHEME_SLUG', wp_get_theme()->get_stylesheet());
 
 
 /*

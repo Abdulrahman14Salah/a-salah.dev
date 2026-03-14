@@ -7,12 +7,13 @@ if (!defined('ABSPATH')) {
 class MyTheme_GitHub_Updater
 {
 
-    private const RELEASE_TRANSIENT_KEY = 'mytheme_github_release';
+    private const RELEASE_TRANSIENT_KEY = 'mytheme_github_release_';
     private const RELEASE_CACHE_TTL = 6 * HOUR_IN_SECONDS;
 
     private $theme_slug;
     private $theme_data;
     private $github_api_url;
+    private $github_repo;
 
     public function __construct()
     {
@@ -20,6 +21,7 @@ class MyTheme_GitHub_Updater
         $this->theme_slug = get_template();
         $this->theme_data = wp_get_theme($this->theme_slug);
         $this->github_api_url = MYTHEME_UPDATE_API;
+        $this->github_repo = MYTHEME_GITHUB_REPO;
 
         add_filter(
             'pre_set_site_transient_update_themes',
@@ -161,13 +163,13 @@ class MyTheme_GitHub_Updater
             return;
         }
 
-        delete_transient(self::RELEASE_TRANSIENT_KEY);
+        delete_transient(self::RELEASE_TRANSIENT_KEY . $this->theme_slug);
     }
 
     private function get_latest_release()
     {
 
-        $release = get_transient(self::RELEASE_TRANSIENT_KEY);
+        $release = get_transient(self::RELEASE_TRANSIENT_KEY . $this->theme_slug);
 
         if ($release) {
             return $release;
@@ -201,7 +203,7 @@ class MyTheme_GitHub_Updater
         }
 
         set_transient(
-            self::RELEASE_TRANSIENT_KEY,
+            self::RELEASE_TRANSIENT_KEY . $this->theme_slug,
             $release,
             self::RELEASE_CACHE_TTL
         );
@@ -212,23 +214,31 @@ class MyTheme_GitHub_Updater
     private function resolve_package_url($release)
     {
 
-        if (empty($release->assets) || !is_array($release->assets)) {
-            return '';
+        $expected_assets = array_filter([
+            $this->theme_slug . '.zip',
+            $this->github_repo . '.zip',
+        ]);
+
+        if (!empty($release->assets) && is_array($release->assets)) {
+            foreach ($release->assets as $asset) {
+                $asset_name = (string) ($asset->name ?? '');
+
+                if (!in_array($asset_name, $expected_assets, true)) {
+                    continue;
+                }
+
+                if (!empty($asset->url)) {
+                    return (string) $asset->url;
+                }
+
+                if (!empty($asset->browser_download_url)) {
+                    return (string) $asset->browser_download_url;
+                }
+            }
         }
 
-        foreach ($release->assets as $asset) {
-
-            if (($asset->name ?? '') !== 'a-salah.dev.zip') {
-                continue;
-            }
-
-            if (!empty($asset->url)) {
-                return (string) $asset->url;
-            }
-
-            if (!empty($asset->browser_download_url)) {
-                return (string) $asset->browser_download_url;
-            }
+        if (!empty($release->zipball_url)) {
+            return (string) $release->zipball_url;
         }
 
         return '';
