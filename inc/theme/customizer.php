@@ -22,6 +22,7 @@ function mytheme_option_defaults()
         'contact_whatsapp'  => '201121600780',
         'social_github'     => 'https://github.com/Abdulrahman14Salah',
         'social_linkedin'   => 'https://www.linkedin.com/in/abdulrahman-salah-hassanein/',
+        'whatsapp_float'    => true,
         'contact_form'      => '',
         'hero_eyebrow'      => __('WordPress & Laravel Developer', 'my-theme'),
         'hero_title'        => __('Websites that load fast, rank well and', 'my-theme'),
@@ -54,6 +55,7 @@ function mytheme_customize_register($wp_customize)
         'contact_email'     => [__('Email', 'my-theme'), 'email', 'sanitize_email'],
         'contact_phone'     => [__('Phone (international format)', 'my-theme'), 'text', 'sanitize_text_field'],
         'contact_whatsapp'  => [__('WhatsApp number (digits only)', 'my-theme'), 'text', 'sanitize_text_field'],
+        'whatsapp_float'    => [__('Show the floating WhatsApp button', 'my-theme'), 'checkbox', 'mytheme_sanitize_checkbox'],
         'social_github'     => [__('GitHub URL', 'my-theme'), 'url', 'esc_url_raw'],
         'social_linkedin'   => [__('LinkedIn URL', 'my-theme'), 'url', 'esc_url_raw'],
         'contact_form'      => [__('Contact form shortcode (e.g. Contact Form 7)', 'my-theme'), 'text', 'mytheme_sanitize_shortcode'],
@@ -86,6 +88,11 @@ function mytheme_sanitize_shortcode($value)
     return trim(wp_strip_all_tags((string) $value));
 }
 
+function mytheme_sanitize_checkbox($value)
+{
+    return (bool) $value;
+}
+
 /**
  * Render the configured contact form, or nothing when none is set.
  */
@@ -106,6 +113,25 @@ function mytheme_whatsapp_url()
 
     return $number ? 'https://wa.me/' . $number : '';
 }
+
+/**
+ * The floating WhatsApp button shows when a number is set and it isn't switched off.
+ */
+function mytheme_show_whatsapp_float()
+{
+    return mytheme_whatsapp_url() && mytheme_option('whatsapp_float');
+}
+
+function mytheme_whatsapp_body_class($classes)
+{
+    if (mytheme_show_whatsapp_float()) {
+        $classes[] = 'has-wa-float';
+    }
+
+    return $classes;
+}
+
+add_filter('body_class', 'mytheme_whatsapp_body_class');
 
 function mytheme_phone_href()
 {

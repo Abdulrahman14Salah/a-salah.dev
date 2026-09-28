@@ -2123,6 +2123,64 @@ select:focus {
     }
 }
 
+/* Floating WhatsApp button
+   ========================================================================== */
+
+.wa-float {
+    --wa-offset: 24px;
+    position: fixed;
+    inset-inline-end: var(--wa-offset);
+    bottom: var(--wa-offset);
+    z-index: 60;
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #128c7e;
+    color: #fff;
+    box-shadow: 0 12px 28px -10px rgba(18, 140, 126, 0.7);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.wa-float:hover,
+.wa-float:focus-visible {
+    background: #0e7064;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.wa-float:focus-visible {
+    outline: 2px solid var(--c-navy);
+    outline-offset: 3px;
+}
+
+/* Room under the footer's bottom bar so the button never covers it. */
+.has-wa-float .site-footer {
+    padding-bottom: 104px;
+}
+
+@media (max-width: 680px) {
+    .wa-float {
+        --wa-offset: 16px;
+    }
+
+    .has-wa-float .site-footer {
+        padding-bottom: 88px;
+    }
+}
+
+/* Print and the open mobile menu don't need it. */
+.nav-open .wa-float {
+    display: none;
+}
+
+@media print {
+    .wa-float {
+        display: none;
+    }
+}
+
 /* WordPress core classes
    ========================================================================== */
 
