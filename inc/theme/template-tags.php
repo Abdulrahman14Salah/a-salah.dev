@@ -67,16 +67,99 @@ function mytheme_logo($variant = 'dark')
 /**
  * Menu fallback when no menu is assigned: Home + top-level pages.
  */
-function mytheme_menu_fallback()
+function mytheme_menu_fallback($args = [])
 {
-    echo '<ul class="menu">';
-    printf('<li class="%s"><a href="%s">%s</a></li>', is_front_page() ? 'current-menu-item' : '', esc_url(home_url('/')), esc_html__('Home', 'my-theme'));
-    wp_list_pages([
+    $html  = sprintf('<ul class="%s">', esc_attr($args['menu_class'] ?? 'menu'));
+    $html .= sprintf('<li class="%s"><a href="%s">%s</a></li>', is_front_page() ? 'current-menu-item' : '', esc_url(home_url('/')), esc_html__('Home', 'my-theme'));
+    $html .= wp_list_pages([
         'title_li' => '',
         'depth'    => 1,
         'exclude'  => (int) get_option('page_on_front'),
+        'echo'     => false,
     ]);
-    echo '</ul>';
+    $html .= '</ul>';
+
+    return mytheme_menu_fallback_output($html, $args);
+}
+
+/**
+ * Footer "Follow" fallback: the social URLs from the Customizer.
+ */
+function mytheme_social_menu_fallback($args = [])
+{
+    $links = [
+        'GitHub'   => mytheme_option('social_github'),
+        'LinkedIn' => mytheme_option('social_linkedin'),
+    ];
+
+    $items = '';
+    foreach (array_filter($links) as $label => $url) {
+        $items .= sprintf('<li><a href="%s" rel="noopener" target="_blank">%s</a></li>', esc_url($url), esc_html($label));
+    }
+
+    return mytheme_menu_fallback_output(mytheme_menu_fallback_list($items, $args), $args);
+}
+
+/**
+ * Footer "Legal" fallback: privacy policy + terms page when they exist.
+ */
+function mytheme_legal_menu_fallback($args = [])
+{
+    $items   = '';
+    $privacy = get_privacy_policy_url();
+    $terms   = get_page_by_path('terms-conditions');
+
+    if ($privacy) {
+        $items .= sprintf('<li><a href="%s">%s</a></li>', esc_url($privacy), esc_html__('Privacy Policy', 'my-theme'));
+    }
+    if ($terms) {
+        $items .= sprintf('<li><a href="%s">%s</a></li>', esc_url(get_permalink($terms)), esc_html__('Terms & Conditions', 'my-theme'));
+    }
+
+    return mytheme_menu_fallback_output(mytheme_menu_fallback_list($items, $args), $args);
+}
+
+function mytheme_menu_fallback_list($items, $args)
+{
+    return $items ? sprintf('<ul class="%s">%s</ul>', esc_attr($args['menu_class'] ?? 'menu'), $items) : '';
+}
+
+/**
+ * Honour wp_nav_menu()'s 'echo' argument in fallbacks.
+ */
+function mytheme_menu_fallback_output($html, $args)
+{
+    if (! isset($args['echo']) || $args['echo']) {
+        echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        return;
+    }
+
+    return $html;
+}
+
+/**
+ * A footer column fed by a menu location; skipped when it has no links.
+ */
+function mytheme_footer_menu_column($location, $title, $fallback)
+{
+    $menu = wp_nav_menu([
+        'theme_location' => $location,
+        'container'      => false,
+        'menu_class'     => 'footer-menu',
+        'depth'          => 1,
+        'fallback_cb'    => $fallback,
+        'echo'           => false,
+    ]);
+
+    if (! $menu) {
+        return;
+    }
+
+    printf(
+        '<div class="site-footer__col"><p class="eyebrow eyebrow--muted">%s</p>%s</div>',
+        esc_html($title),
+        $menu // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    );
 }
 
 /**

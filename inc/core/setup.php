@@ -69,8 +69,10 @@ function mytheme_setup()
 
     register_nav_menus(
         array(
-            'primary' => __('Primary Menu', 'my-theme'),
-            'footer'  => __('Footer Menu', 'my-theme'),
+            'primary'       => __('Primary Menu', 'my-theme'),
+            'footer'        => __('Footer: Pages', 'my-theme'),
+            'footer_social' => __('Footer: Follow', 'my-theme'),
+            'footer_legal'  => __('Footer: Legal', 'my-theme'),
         )
     );
 }
