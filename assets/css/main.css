@@ -2123,6 +2123,79 @@ select:focus {
     }
 }
 
+/* Testimonials
+   ========================================================================== */
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 24px;
+}
+
+.testimonial {
+    margin: 0;
+    padding: 32px;
+    border-radius: var(--radius);
+    border: 1px solid var(--c-line-strong);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 28px;
+}
+
+.testimonial__quote {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--c-text);
+}
+
+.testimonial__quote p + p {
+    margin-top: 0.8em;
+}
+
+.testimonial__author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.testimonial__avatar {
+    width: 48px;
+    height: 48px;
+    flex: none;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--c-surface);
+}
+
+.testimonial__author > span {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.testimonial__name {
+    color: var(--c-ink);
+}
+
+.testimonial__role {
+    font-size: 14px;
+    color: var(--c-subtle);
+}
+
+.testimonial__link {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+@media (max-width: 680px) {
+    .testimonial {
+        padding: 24px;
+    }
+}
+
 /* Floating WhatsApp button
    ========================================================================== */
 

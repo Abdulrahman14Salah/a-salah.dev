@@ -124,6 +124,8 @@ $work_url   = get_post_type_archive_link('project');
     </div>
 </section>
 
+<?php get_template_part('template-parts/sections/testimonials'); ?>
+
 <section class="section">
     <div class="container about-teaser">
         <div class="about-teaser__head">
