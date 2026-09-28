@@ -1,15 +1,23 @@
-<?php get_header(); ?>
+<?php
 
-<div class="container">
+if (! defined('ABSPATH')) {
+    exit;
+}
 
-    <h1>Page Not Found</h1>
+get_header();
 
-    <p>The page you are looking for does not exist.</p>
+?>
+<section class="section not-found">
+    <div class="container container--narrow">
+        <p class="eyebrow">404</p>
+        <h1 class="page-hero__title"><?php esc_html_e('Page not found', 'my-theme'); ?></h1>
+        <p class="page-hero__lead"><?php esc_html_e("The page you're looking for doesn't exist or has moved.", 'my-theme'); ?></p>
+        <div class="button-row">
+            <a class="button" href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Back to homepage', 'my-theme'); ?></a>
+            <a class="button button--outline" href="<?php echo esc_url(mytheme_contact_url()); ?>"><?php esc_html_e('Contact me', 'my-theme'); ?></a>
+        </div>
+    </div>
+</section>
+<?php
 
-    <a href="<?php echo esc_url(home_url('/')); ?>">
-        Back to homepage
-    </a>
-
-</div>
-
-<?php get_footer(); ?>
+get_footer();

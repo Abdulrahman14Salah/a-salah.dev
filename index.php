@@ -1,26 +1,20 @@
-<?php get_header(); ?>
+<?php
 
-<div class="container">
+if (! defined('ABSPATH')) {
+    exit;
+}
 
-    <?php
+get_header();
 
-    if (have_posts()) :
+if (is_search()) {
+    /* translators: %s: search query */
+    $title = sprintf(__('Results for “%s”', 'my-theme'), get_search_query());
+} else {
+    $title = __('Blog', 'my-theme');
+}
 
-        while (have_posts()) :
+get_template_part('template-parts/sections/page-hero', null, ['title' => $title]);
 
-            the_post();
+get_template_part('template-parts/sections/post-loop');
 
-            get_template_part('template-parts/content/content', 'post');
-
-        endwhile;
-
-    else :
-
-        echo '<p>No posts found</p>';
-
-    endif;
-
-    ?>
-
-</div>
-<?php get_footer(); ?>
+get_footer();

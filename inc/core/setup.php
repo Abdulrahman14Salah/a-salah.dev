@@ -76,3 +76,30 @@ function mytheme_setup()
 }
 
 add_action('after_setup_theme', 'mytheme_setup');
+
+/**
+ * Image sizes and editor support used by the templates.
+ */
+function mytheme_setup_media()
+{
+    add_theme_support('responsive-embeds');
+    add_theme_support('align-wide');
+    add_image_size('mytheme-card', 1200, 800, true);
+    add_image_size('mytheme-wide', 1920, 1080, false);
+}
+
+add_action('after_setup_theme', 'mytheme_setup_media');
+
+function mytheme_excerpt_length()
+{
+    return 28;
+}
+
+add_filter('excerpt_length', 'mytheme_excerpt_length');
+
+function mytheme_excerpt_more()
+{
+    return '…';
+}
+
+add_filter('excerpt_more', 'mytheme_excerpt_more');

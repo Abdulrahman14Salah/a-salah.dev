@@ -1,23 +1,19 @@
-<?php get_header(); ?>
+<?php
 
-<div class="container">
+if (! defined('ABSPATH')) {
+    exit;
+}
 
-    <?php
+get_header();
 
-    if (have_posts()) :
+while (have_posts()) :
+    the_post();
 
-        while (have_posts()) :
+    get_template_part('template-parts/sections/page-hero', null, [
+        'lead' => has_excerpt() ? get_the_excerpt() : '',
+    ]);
 
-            the_post();
+    get_template_part('template-parts/content/content', 'page');
+endwhile;
 
-            get_template_part('template-parts/content/content', 'page');
-
-        endwhile;
-
-    endif;
-
-    ?>
-
-</div>
-
-<?php get_footer(); ?>
+get_footer();

@@ -1,29 +1,20 @@
-<?php get_header(); ?>
+<?php
 
-<div class="container">
+if (! defined('ABSPATH')) {
+    exit;
+}
 
-    <h1><?php the_archive_title(); ?></h1>
+get_header();
 
-    <?php
+$title = wp_strip_all_tags(get_the_archive_title());
+$lead  = wp_strip_all_tags(get_the_archive_description());
 
-    if (have_posts()) :
+get_template_part('template-parts/sections/page-hero', null, [
+    'title' => $title,
+    'lead'  => $lead,
+    'trail' => [__('Blog', 'my-theme') => mytheme_blog_url(), $title => ''],
+]);
 
-        while (have_posts()) :
+get_template_part('template-parts/sections/post-loop');
 
-            the_post();
-
-            get_template_part('template-parts/content/content', 'post');
-
-        endwhile;
-
-    else :
-
-        echo '<p>No posts found</p>';
-
-    endif;
-
-    ?>
-
-</div>
-
-<?php get_footer(); ?>
+get_footer();

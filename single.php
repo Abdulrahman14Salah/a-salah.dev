@@ -1,23 +1,24 @@
-<?php get_header(); ?>
+<?php
 
-<div class="container">
+if (! defined('ABSPATH')) {
+    exit;
+}
 
-    <?php
+get_header();
 
-    if (have_posts()) :
+while (have_posts()) :
+    the_post();
+    get_template_part('template-parts/content/content', 'post');
 
-        while (have_posts()) :
-
-            the_post();
-
-            get_template_part('template-parts/content/content', 'post');
-
-        endwhile;
-
+    if (comments_open() || get_comments_number()) :
+        ?>
+        <div class="container container--narrow">
+            <?php comments_template(); ?>
+        </div>
+        <?php
     endif;
+endwhile;
 
-    ?>
+get_template_part('template-parts/sections/contact-cta');
 
-</div>
-
-<?php get_footer(); ?>
+get_footer();
