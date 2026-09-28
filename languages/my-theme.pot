@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-28T00:39:07+00:00\n"
+"POT-Creation-Date: 2026-09-28T00:44:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: my-theme\n"
@@ -99,138 +99,145 @@ msgstr ""
 msgid "All rights reserved."
 msgstr ""
 
-#: front-page.php:38
+#: footer.php:38
+msgid "Chat on WhatsApp"
+msgstr ""
+
+#: front-page.php:40
 msgid "Start your website"
 msgstr ""
 
-#: front-page.php:39
+#: front-page.php:41
 msgid "See my work"
 msgstr ""
 
-#: front-page.php:46
+#: front-page.php:60
 msgid "Core stack"
 msgstr ""
 
-#: front-page.php:48
-#: inc/theme/template-tags.php:212
+#: front-page.php:62
+#: inc/theme/template-tags.php:232
 msgid "WordPress"
 msgstr ""
 
-#: front-page.php:49
-#: inc/theme/template-tags.php:213
+#: front-page.php:63
+#: inc/theme/template-tags.php:233
 msgid "Laravel"
 msgstr ""
 
-#: front-page.php:50
-#: inc/theme/template-tags.php:214
+#: front-page.php:64
+#: inc/theme/template-tags.php:234
 msgid "PHP"
 msgstr ""
 
-#: front-page.php:51
-#: inc/theme/template-tags.php:220
+#: front-page.php:65
+#: inc/theme/template-tags.php:240
 msgid "Tailwind"
 msgstr ""
 
-#: front-page.php:56
+#: front-page.php:70
 msgid "Maintained & secured"
 msgstr ""
 
-#: front-page.php:65
+#: front-page.php:79
 msgid "Tools I work with"
 msgstr ""
 
-#: front-page.php:79
+#: front-page.php:93
 #: page-templates/about.php:48
 msgid "Services"
 msgstr ""
 
-#: front-page.php:80
+#: front-page.php:94
 msgid "Built for businesses like yours"
 msgstr ""
 
-#: front-page.php:82
+#: front-page.php:96
 msgid "From the first design to the monthly updates: WordPress sites, custom plugins and themes, speed and SEO work, maintenance, Laravel applications, and hosting and domains."
 msgstr ""
 
-#: front-page.php:92
+#: front-page.php:106
 msgid "Selected work"
 msgstr ""
 
-#: front-page.php:93
+#: front-page.php:107
 msgid "Recent projects"
 msgstr ""
 
-#: front-page.php:96
+#: front-page.php:110
+#: page-templates/service.php:77
 msgid "All projects"
 msgstr ""
 
-#: front-page.php:115
+#: front-page.php:129
 msgid "Next project"
 msgstr ""
 
-#: front-page.php:117
+#: front-page.php:131
 msgid "Your website could be next."
 msgstr ""
 
-#: front-page.php:118
+#: front-page.php:132
 msgid "Tell me about your idea and I'll come back with a plan and a quote."
 msgstr ""
 
-#: front-page.php:119
+#: front-page.php:133
 #: template-parts/header/navigation.php:26
 msgid "Get a quote"
 msgstr ""
 
 #. Template Name of the theme
-#: front-page.php:130
+#: front-page.php:146
 msgid "About"
 msgstr ""
 
-#: front-page.php:131
+#: front-page.php:147
 msgid "One developer, from the first line to launch day."
 msgstr ""
 
-#: front-page.php:134
+#: front-page.php:150
 msgid "I specialize in professional, high-performance websites built around each client's needs. The goal is always the same: meet the technical requirements, and make the site easier to use, more engaging, and better at bringing in business."
 msgstr ""
 
-#: front-page.php:136
+#: front-page.php:152
 msgid "Quality"
 msgstr ""
 
-#: front-page.php:136
+#: front-page.php:152
 msgid "Clean code and careful builds."
 msgstr ""
 
-#: front-page.php:137
+#: front-page.php:153
 msgid "Transparency"
 msgstr ""
 
-#: front-page.php:137
+#: front-page.php:153
 msgid "Clear scope, clear updates."
 msgstr ""
 
-#: front-page.php:138
+#: front-page.php:154
 msgid "Satisfaction"
 msgstr ""
 
-#: front-page.php:138
+#: front-page.php:154
 msgid "Done when you're happy with it."
 msgstr ""
 
-#: front-page.php:141
+#: front-page.php:157
 msgid "More about Abdulrahman"
 msgstr ""
 
-#: front-page.php:152
+#: front-page.php:168
+#: page-templates/service.php:99
 msgid "From the blog"
 msgstr ""
 
-#: front-page.php:153
+#: front-page.php:169
 msgid "Latest writing"
 msgstr ""
 
-#: front-page.php:155
+#: front-page.php:171
+#: page-templates/service.php:102
 msgid "All articles"
 msgstr ""
 
@@ -262,76 +269,89 @@ msgstr ""
 msgid "Footer: Legal"
 msgstr ""
 
-#: inc/theme/customizer.php:26
+#: inc/theme/customizer.php:27
 msgid "WordPress & Laravel Developer"
 msgstr ""
 
-#: inc/theme/customizer.php:27
+#: inc/theme/customizer.php:28
 msgid "Websites that load fast, rank well and"
 msgstr ""
 
-#: inc/theme/customizer.php:28
+#: inc/theme/customizer.php:29
 msgid "keep working."
 msgstr ""
 
-#: inc/theme/customizer.php:29
+#: inc/theme/customizer.php:31
 msgid "I'm Abdulrahman Salah. I design and build WordPress and Laravel websites for companies, organizations and public figures, then keep them secure and up to date."
 msgstr ""
 
-#: inc/theme/customizer.php:30
+#: inc/theme/customizer.php:32
 msgid "Designed and developed by Arqam Web"
 msgstr ""
 
-#: inc/theme/customizer.php:45
+#: inc/theme/customizer.php:47
 msgid "Theme Options"
 msgstr ""
 
-#: inc/theme/customizer.php:50
+#: inc/theme/customizer.php:52
 msgid "Hero label"
 msgstr ""
 
-#: inc/theme/customizer.php:51
+#: inc/theme/customizer.php:53
 msgid "Hero title"
 msgstr ""
 
-#: inc/theme/customizer.php:52
+#: inc/theme/customizer.php:54
 msgid "Hero title (blue part)"
 msgstr ""
 
-#: inc/theme/customizer.php:53
+#: inc/theme/customizer.php:55
 msgid "Hero text"
 msgstr ""
 
-#: inc/theme/customizer.php:54
+#: inc/theme/customizer.php:56
 #: page-templates/contact.php:35
 msgid "Email"
 msgstr ""
 
-#: inc/theme/customizer.php:55
+#: inc/theme/customizer.php:57
 msgid "Phone (international format)"
 msgstr ""
 
-#: inc/theme/customizer.php:56
+#: inc/theme/customizer.php:58
 msgid "WhatsApp number (digits only)"
 msgstr ""
 
-#: inc/theme/customizer.php:57
-msgid "GitHub URL"
-msgstr ""
-
-#: inc/theme/customizer.php:58
-msgid "LinkedIn URL"
-msgstr ""
-
 #: inc/theme/customizer.php:59
-msgid "Contact form shortcode (e.g. Contact Form 7)"
+msgid "Show the floating WhatsApp button"
 msgstr ""
 
 #: inc/theme/customizer.php:60
+msgid "GitHub URL"
+msgstr ""
+
+#: inc/theme/customizer.php:61
+msgid "LinkedIn URL"
+msgstr ""
+
+#: inc/theme/customizer.php:62
+msgid "Contact form shortcode (e.g. Contact Form 7)"
+msgstr ""
+
+#: inc/theme/customizer.php:63
 msgid "Footer credit"
 msgstr ""
 
+#: inc/theme/customizer.php:87
+msgid "Hero photo"
+msgstr ""
+
+#: inc/theme/customizer.php:88
+msgid "Shown in the home page hero instead of the logo mark."
+msgstr ""
+
 #: inc/theme/post-types.php:26
+#: page-templates/service.php:74
 msgid "Projects"
 msgstr ""
 
@@ -355,6 +375,7 @@ msgstr ""
 msgid "Client"
 msgstr ""
 
+#. Template Name of the theme
 #: inc/theme/post-types.php:51
 msgid "Service"
 msgstr ""
@@ -375,17 +396,58 @@ msgstr ""
 msgid "Tags (comma separated)"
 msgstr ""
 
-#: inc/theme/post-types.php:61
+#: inc/theme/post-types.php:56
+msgid "Service page slug (shows this project on that service page)"
+msgstr ""
+
+#: inc/theme/post-types.php:62
 msgid "Project details"
 msgstr ""
 
+#: inc/theme/post-types.php:142
+#: template-parts/sections/testimonials.php:23
+msgid "Testimonials"
+msgstr ""
+
+#: inc/theme/post-types.php:143
+msgid "Testimonial"
+msgstr ""
+
+#: inc/theme/post-types.php:144
+msgid "Add New Testimonial"
+msgstr ""
+
+#: inc/theme/post-types.php:145
+msgid "Edit Testimonial"
+msgstr ""
+
+#: inc/theme/post-types.php:146
+msgid "All Testimonials"
+msgstr ""
+
+#: inc/theme/post-types.php:161
+msgid "Role"
+msgstr ""
+
+#: inc/theme/post-types.php:162
+msgid "Company"
+msgstr ""
+
+#: inc/theme/post-types.php:163
+msgid "Project URL"
+msgstr ""
+
+#: inc/theme/post-types.php:169
+msgid "Testimonial details"
+msgstr ""
+
 #: inc/theme/template-tags.php:74
-#: inc/theme/template-tags.php:241
+#: inc/theme/template-tags.php:280
 msgid "Home"
 msgstr ""
 
 #: inc/theme/template-tags.php:92
-#: inc/theme/template-tags.php:223
+#: inc/theme/template-tags.php:243
 msgid "GitHub"
 msgstr ""
 
@@ -401,89 +463,99 @@ msgstr ""
 msgid "Terms & Conditions"
 msgstr ""
 
-#: inc/theme/template-tags.php:200
+#: inc/theme/template-tags.php:203
 msgid "WordPress Website Design & Development"
 msgstr ""
 
-#: inc/theme/template-tags.php:200
+#: inc/theme/template-tags.php:203
 msgid "Professional, high-performance WordPress websites, whether it's a business site, an online store or a portfolio, with a modern design and a smooth experience for your visitors."
 msgstr ""
 
-#: inc/theme/template-tags.php:201
+#: inc/theme/template-tags.php:204
 msgid "WordPress Plugin & Theme Development"
 msgstr ""
 
-#: inc/theme/template-tags.php:201
+#: inc/theme/template-tags.php:204
 msgid "Custom plugins and themes built from scratch: secure, scalable and written around exactly what your website needs to do."
 msgstr ""
 
-#: inc/theme/template-tags.php:202
+#: inc/theme/template-tags.php:205
 msgid "Website Optimization & SEO"
 msgstr ""
 
-#: inc/theme/template-tags.php:202
+#: inc/theme/template-tags.php:205
 msgid "Faster loading, better Core Web Vitals and solid on-page SEO, so your site gets found and people stay on it."
 msgstr ""
 
-#: inc/theme/template-tags.php:203
+#: inc/theme/template-tags.php:206
 msgid "Website Maintenance & Updates"
 msgstr ""
 
-#: inc/theme/template-tags.php:203
+#: inc/theme/template-tags.php:206
 msgid "Regular updates, security patches, bug fixes and performance monitoring, handled for you so the site keeps running smoothly."
 msgstr ""
 
-#: inc/theme/template-tags.php:204
+#: inc/theme/template-tags.php:207
 msgid "Laravel Web Development"
 msgstr ""
 
-#: inc/theme/template-tags.php:204
+#: inc/theme/template-tags.php:207
 msgid "Custom web applications in Laravel: secure, fast and shaped around how your business actually works."
 msgstr ""
 
-#: inc/theme/template-tags.php:205
+#: inc/theme/template-tags.php:208
 msgid "Hosting Management & Domain Registration"
 msgstr ""
 
-#: inc/theme/template-tags.php:205
+#: inc/theme/template-tags.php:208
 msgid "Hosting setup, server configuration and domain registration, with reliable performance, security and backups."
 msgstr ""
 
-#: inc/theme/template-tags.php:215
+#: inc/theme/template-tags.php:235
 msgid "SQL"
 msgstr ""
 
-#: inc/theme/template-tags.php:216
+#: inc/theme/template-tags.php:236
 msgid "HTML"
 msgstr ""
 
-#: inc/theme/template-tags.php:217
+#: inc/theme/template-tags.php:237
 msgid "CSS"
 msgstr ""
 
-#: inc/theme/template-tags.php:218
+#: inc/theme/template-tags.php:238
 msgid "JavaScript"
 msgstr ""
 
-#: inc/theme/template-tags.php:219
+#: inc/theme/template-tags.php:239
 msgid "SCSS"
 msgstr ""
 
-#: inc/theme/template-tags.php:221
+#: inc/theme/template-tags.php:241
 msgid "Bootstrap"
 msgstr ""
 
-#: inc/theme/template-tags.php:222
+#: inc/theme/template-tags.php:242
 msgid "Shopify"
 msgstr ""
 
-#: inc/theme/template-tags.php:240
+#. translators: 1: post title, 2: what the image shows, e.g. "project screenshot".
+#: inc/theme/template-tags.php:263
+#, php-format
+msgid "%1$s — %2$s"
+msgstr ""
+
+#: inc/theme/template-tags.php:279
 msgid "Breadcrumb"
 msgstr ""
 
-#: inc/theme/template-tags.php:278
+#: inc/theme/template-tags.php:317
 msgctxt "post card date format"
 msgid "F Y"
+msgstr ""
+
+#: inc/updates/updater.php:191
+msgid "The theme update could not be installed: its folder could not be renamed."
 msgstr ""
 
 #. translators: %s: search query
@@ -559,12 +631,21 @@ msgstr ""
 msgid "Prefer email? Write to me directly:"
 msgstr ""
 
+#: page-templates/service.php:73
+msgid "Related work"
+msgstr ""
+
 #: single-project.php:41
 msgid "Live site"
 msgstr ""
 
 #: single-project.php:41
 msgid "Visit website"
+msgstr ""
+
+#: single-project.php:50
+#: template-parts/cards/project.php:14
+msgid "project screenshot"
 msgstr ""
 
 #: single-project.php:64
@@ -622,4 +703,16 @@ msgstr ""
 
 #: template-parts/sections/post-loop.php:32
 msgid "New content is on the way. Check back soon."
+msgstr ""
+
+#: template-parts/sections/services.php:38
+msgid "Learn more"
+msgstr ""
+
+#: template-parts/sections/testimonials.php:24
+msgid "What clients say"
+msgstr ""
+
+#: template-parts/sections/testimonials.php:51
+msgid "See the project"
 msgstr ""
