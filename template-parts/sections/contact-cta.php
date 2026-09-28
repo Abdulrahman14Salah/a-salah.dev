@@ -26,7 +26,7 @@ $form     = mytheme_contact_form();
                         <li><a href="<?php echo esc_attr(mytheme_phone_href()); ?>"><?php echo mytheme_icon('phone', 20); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span dir="ltr"><?php echo esc_html($phone); ?></span></a></li>
                     <?php endif; ?>
                     <?php if ($whatsapp) : ?>
-                        <li><a href="<?php echo esc_url($whatsapp); ?>" rel="noopener" target="_blank"><?php echo mytheme_icon('chat', 20); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>WhatsApp</a></li>
+                        <li><a href="<?php echo esc_url($whatsapp); ?>" rel="noopener" target="_blank"><?php echo mytheme_icon('chat', 20); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e('WhatsApp', 'my-theme'); ?></a></li>
                     <?php endif; ?>
                 </ul>
 

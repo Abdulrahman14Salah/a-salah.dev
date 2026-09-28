@@ -37,10 +37,11 @@ function mytheme_icon($name, $size = 24, $class = '')
     }
 
     return sprintf(
-        '<svg class="icon %1$s" width="%2$d" height="%2$d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">%3$s</svg>',
+        '<svg class="icon icon-%4$s %1$s" width="%2$d" height="%2$d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">%3$s</svg>',
         esc_attr($class),
         (int) $size,
-        $paths[$name]
+        $paths[$name],
+        esc_attr($name)
     );
 }
 
@@ -88,8 +89,8 @@ function mytheme_menu_fallback($args = [])
 function mytheme_social_menu_fallback($args = [])
 {
     $links = [
-        'GitHub'   => mytheme_option('social_github'),
-        'LinkedIn' => mytheme_option('social_linkedin'),
+        __('GitHub', 'my-theme')   => mytheme_option('social_github'),
+        __('LinkedIn', 'my-theme') => mytheme_option('social_linkedin'),
     ];
 
     $items = '';
@@ -207,7 +208,20 @@ function mytheme_services()
 
 function mytheme_stack()
 {
-    return ['WordPress', 'Laravel', 'PHP', 'SQL', 'HTML', 'CSS', 'JavaScript', 'SCSS', 'Tailwind', 'Bootstrap', 'Shopify', 'GitHub'];
+    return [
+        __('WordPress', 'my-theme'),
+        __('Laravel', 'my-theme'),
+        __('PHP', 'my-theme'),
+        __('SQL', 'my-theme'),
+        __('HTML', 'my-theme'),
+        __('CSS', 'my-theme'),
+        __('JavaScript', 'my-theme'),
+        __('SCSS', 'my-theme'),
+        __('Tailwind', 'my-theme'),
+        __('Bootstrap', 'my-theme'),
+        __('Shopify', 'my-theme'),
+        __('GitHub', 'my-theme'),
+    ];
 }
 
 /**
@@ -261,7 +275,7 @@ function mytheme_post_meta_line($post_id = null)
         $parts[] = $categories[0]->name;
     }
 
-    $parts[] = get_the_date('F Y', $post_id);
+    $parts[] = get_the_date(_x('F Y', 'post card date format', 'my-theme'), $post_id);
 
     return implode(' · ', $parts);
 }

@@ -35,7 +35,7 @@ while (have_posts()) :
                         <li><a class="contact-card" href="mailto:<?php echo esc_attr($email); ?>"><span class="icon-tile"><?php echo mytheme_icon('mail', 22); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><span><span class="eyebrow eyebrow--muted"><?php esc_html_e('Email', 'my-theme'); ?></span><strong><?php echo esc_html($email); ?></strong></span></a></li>
                     <?php endif; ?>
                     <?php if ($whatsapp) : ?>
-                        <li><a class="contact-card" href="<?php echo esc_url($whatsapp); ?>" rel="noopener" target="_blank"><span class="icon-tile"><?php echo mytheme_icon('chat', 22); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><span><span class="eyebrow eyebrow--muted">WhatsApp</span><strong dir="ltr"><?php echo esc_html($phone); ?></strong></span></a></li>
+                        <li><a class="contact-card" href="<?php echo esc_url($whatsapp); ?>" rel="noopener" target="_blank"><span class="icon-tile"><?php echo mytheme_icon('chat', 22); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><span><span class="eyebrow eyebrow--muted"><?php esc_html_e('WhatsApp', 'my-theme'); ?></span><strong dir="ltr"><?php echo esc_html($phone); ?></strong></span></a></li>
                     <?php endif; ?>
                 </ul>
             </div>

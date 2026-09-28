@@ -45,10 +45,10 @@ $work_url   = get_post_type_archive_link('project');
             <div class="float-card float-card--stack">
                 <p class="eyebrow eyebrow--muted"><?php esc_html_e('Core stack', 'my-theme'); ?></p>
                 <ul class="chips">
-                    <li class="chip chip--blue">WordPress</li>
-                    <li class="chip chip--blue">Laravel</li>
-                    <li class="chip">PHP</li>
-                    <li class="chip">Tailwind</li>
+                    <li class="chip chip--blue"><?php esc_html_e('WordPress', 'my-theme'); ?></li>
+                    <li class="chip chip--blue"><?php esc_html_e('Laravel', 'my-theme'); ?></li>
+                    <li class="chip"><?php esc_html_e('PHP', 'my-theme'); ?></li>
+                    <li class="chip"><?php esc_html_e('Tailwind', 'my-theme'); ?></li>
                 </ul>
             </div>
             <div class="float-card float-card--badge">

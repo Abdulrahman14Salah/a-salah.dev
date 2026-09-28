@@ -23,11 +23,11 @@ function mytheme_option_defaults()
         'social_github'     => 'https://github.com/Abdulrahman14Salah',
         'social_linkedin'   => 'https://www.linkedin.com/in/abdulrahman-salah-hassanein/',
         'contact_form'      => '',
-        'hero_eyebrow'      => 'WordPress & Laravel Developer',
-        'hero_title'        => 'Websites that load fast, rank well and',
-        'hero_title_accent' => 'keep working.',
-        'hero_text'         => "I'm Abdulrahman Salah. I design and build WordPress and Laravel websites for companies, organizations and public figures, then keep them secure and up to date.",
-        'footer_credit'     => 'Designed and developed by Arqam Web',
+        'hero_eyebrow'      => __('WordPress & Laravel Developer', 'my-theme'),
+        'hero_title'        => __('Websites that load fast, rank well and', 'my-theme'),
+        'hero_title_accent' => __('keep working.', 'my-theme'),
+        'hero_text'         => __("I'm Abdulrahman Salah. I design and build WordPress and Laravel websites for companies, organizations and public figures, then keep them secure and up to date.", 'my-theme'),
+        'footer_credit'     => __('Designed and developed by Arqam Web', 'my-theme'),
     ];
 }
 

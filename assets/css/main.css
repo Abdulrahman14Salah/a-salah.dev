@@ -127,7 +127,7 @@ ol {
 
 .skip-link {
     position: absolute;
-    left: 16px;
+    inset-inline-start: 16px;
     top: -60px;
     z-index: 100;
     background: var(--c-navy);
@@ -461,8 +461,7 @@ input[type="submit"]:hover {
     .main-navigation {
         display: none;
         position: absolute;
-        left: 0;
-        right: 0;
+        inset-inline: 0;
         top: 100%;
         flex-direction: column;
         align-items: stretch;
@@ -627,7 +626,7 @@ input[type="submit"]:hover {
 }
 
 .float-card--stack {
-    left: 36px;
+    inset-inline-start: 36px;
     bottom: 36px;
     width: 300px;
     max-width: calc(100% - 72px);
@@ -642,7 +641,7 @@ input[type="submit"]:hover {
 }
 
 .float-card--badge {
-    right: 36px;
+    inset-inline-end: 36px;
     top: 36px;
     display: flex;
     align-items: center;
@@ -687,7 +686,7 @@ input[type="submit"]:hover {
     }
 
     .float-card--stack {
-        left: 16px;
+        inset-inline-start: 16px;
         bottom: 16px;
         max-width: calc(100% - 32px);
         padding: 16px;
@@ -1197,7 +1196,8 @@ input[type="submit"]:hover {
 }
 
 .post-card--wide .post-card__body {
-    padding: 0 24px 0 0;
+    padding-block: 0;
+    padding-inline: 0 24px;
 }
 
 .post-card--wide .post-card__title {
@@ -1442,7 +1442,7 @@ select:focus {
 
 .wpcf7-spinner {
     position: absolute;
-    right: 16px;
+    inset-inline-end: 16px;
     bottom: 16px;
     margin: 0;
 }
@@ -1712,7 +1712,7 @@ select:focus {
 
 .entry-content ul,
 .entry-content ol {
-    padding-left: 1.3em;
+    padding-inline-start: 1.3em;
 }
 
 .entry-content li + li {
@@ -1725,9 +1725,10 @@ select:focus {
 }
 
 .entry-content blockquote {
-    margin-left: 0;
-    padding: 4px 0 4px 24px;
-    border-left: 3px solid var(--c-brand);
+    margin-inline-start: 0;
+    padding-block: 4px;
+    padding-inline: 24px 0;
+    border-inline-start: 3px solid var(--c-brand);
     color: var(--c-navy);
     font-size: 20px;
 }
@@ -1770,8 +1771,8 @@ select:focus {
 }
 
 .post-nav__next {
-    margin-left: auto;
-    text-align: right;
+    margin-inline-start: auto;
+    text-align: end;
 }
 
 /* Case study
@@ -2022,12 +2023,16 @@ select:focus {
 
 .alignleft {
     float: left;
-    margin: 0 1.5em 1em 0;
+    float: inline-start;
+    margin-block: 0 1em;
+    margin-inline: 0 1.5em;
 }
 
 .alignright {
     float: right;
-    margin: 0 0 1em 1.5em;
+    float: inline-end;
+    margin-block: 0 1em;
+    margin-inline: 1.5em 0;
 }
 
 .aligncenter {
@@ -2059,4 +2064,32 @@ select:focus {
     border: 1px dashed #c9d0e4;
     border-radius: 12px;
     font-size: 14px;
+}
+
+/* Right-to-left (Arabic)
+   ========================================================================== */
+
+[dir="rtl"] {
+    --f-body: "IBM Plex Sans Arabic", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-display: "IBM Plex Sans Arabic", "Bricolage Grotesque", system-ui, sans-serif;
+}
+
+/* Arabic script has no capitals and breaks apart with letter-spacing. */
+[dir="rtl"] :is(h1, h2, h3, h4, h5, h6, .section-title, .hero__title, .page-hero__title, .article__title, .panel__title, .cta-panel__title) {
+    letter-spacing: 0;
+}
+
+[dir="rtl"] :is(.eyebrow, .pill, .breadcrumb, .service-card__num, .service-list__num) {
+    font-family: var(--f-body);
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+[dir="rtl"] .icon-arrow {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] a:hover .text-link .icon-arrow,
+[dir="rtl"] .text-link:hover .icon-arrow {
+    transform: scaleX(-1) translateX(3px);
 }
