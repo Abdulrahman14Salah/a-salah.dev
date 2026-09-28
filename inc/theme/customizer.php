@@ -27,6 +27,7 @@ function mytheme_option_defaults()
         'hero_eyebrow'      => __('WordPress & Laravel Developer', 'my-theme'),
         'hero_title'        => __('Websites that load fast, rank well and', 'my-theme'),
         'hero_title_accent' => __('keep working.', 'my-theme'),
+        'hero_photo'        => 0,
         'hero_text'         => __("I'm Abdulrahman Salah. I design and build WordPress and Laravel websites for companies, organizations and public figures, then keep them secure and up to date.", 'my-theme'),
         'footer_credit'     => __('Designed and developed by Arqam Web', 'my-theme'),
     ];
@@ -76,6 +77,19 @@ function mytheme_customize_register($wp_customize)
             'type'    => $type,
         ]);
     }
+
+    $wp_customize->add_setting('mytheme_hero_photo', [
+        'default'           => 0,
+        'sanitize_callback' => 'absint',
+    ]);
+
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'mytheme_hero_photo', [
+        'label'       => __('Hero photo', 'my-theme'),
+        'description' => __('Shown in the home page hero instead of the logo mark.', 'my-theme'),
+        'section'     => 'mytheme_options',
+        'mime_type'   => 'image',
+        'priority'    => 5,
+    ]));
 }
 
 add_action('customize_register', 'mytheme_customize_register');
