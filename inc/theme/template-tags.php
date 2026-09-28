@@ -245,6 +245,25 @@ function mytheme_stack()
 }
 
 /**
+ * Alt text for a post's featured image: the image's own alt text, else the
+ * post title with an optional context, e.g. "Aawan Website — project screenshot".
+ */
+function mytheme_thumbnail_alt($post_id = null, $context = '')
+{
+    $post_id = $post_id ?: get_the_ID();
+    $alt     = trim((string) get_post_meta(get_post_thumbnail_id($post_id), '_wp_attachment_image_alt', true));
+
+    if ('' !== $alt) {
+        return $alt;
+    }
+
+    $title = wp_strip_all_tags(get_the_title($post_id));
+
+    /* translators: 1: post title, 2: what the image shows, e.g. "project screenshot". */
+    return $context ? sprintf(__('%1$s — %2$s', 'my-theme'), $title, $context) : $title;
+}
+
+/**
  * Eyebrow label above section titles.
  */
 function mytheme_eyebrow($text, $class = '')

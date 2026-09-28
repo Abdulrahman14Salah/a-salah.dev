@@ -29,7 +29,7 @@ $categories = get_the_category();
 
     <?php if (has_post_thumbnail()) : ?>
         <div class="container article__figure">
-            <?php the_post_thumbnail('mytheme-wide', ['loading' => 'eager', 'fetchpriority' => 'high']); ?>
+            <?php the_post_thumbnail('mytheme-wide', ['alt' => mytheme_thumbnail_alt(), 'loading' => 'eager', 'fetchpriority' => 'high']); ?>
         </div>
     <?php endif; ?>
 
