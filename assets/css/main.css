@@ -813,6 +813,37 @@ input[type="submit"]:hover {
     color: var(--c-muted);
 }
 
+.service-card--link {
+    color: inherit;
+}
+
+.service-card--link:hover {
+    color: inherit;
+}
+
+.service-card__more {
+    margin-top: auto;
+}
+
+.service-list__item--link {
+    position: relative;
+}
+
+.service-list__link {
+    color: inherit;
+}
+
+/* The whole row is clickable. */
+.service-list__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.service-list__item--link:hover .service-list__title {
+    color: var(--c-brand-strong);
+}
+
 @media (max-width: 1080px) {
     .service-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1731,6 +1762,80 @@ select:focus {
     border-inline-start: 3px solid var(--c-brand);
     color: var(--c-navy);
     font-size: 20px;
+}
+
+/* FAQ: core Details blocks as an accordion */
+.entry-content .wp-block-details {
+    border: 1px solid var(--c-line-strong);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    padding: 0;
+    transition: border-color 0.2s ease;
+}
+
+.entry-content .wp-block-details + .wp-block-details {
+    margin-top: 12px;
+}
+
+.entry-content .wp-block-details[open] {
+    border-color: #cfd8fb;
+}
+
+.entry-content .wp-block-details summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    font-family: var(--f-display);
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--c-ink);
+    cursor: pointer;
+    list-style: none;
+}
+
+.entry-content .wp-block-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.entry-content .wp-block-details summary::after {
+    content: "+";
+    flex: none;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--c-tint);
+    color: var(--c-brand-strong);
+    font-size: 20px;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.entry-content .wp-block-details[open] summary::after {
+    transform: rotate(45deg);
+}
+
+.entry-content .wp-block-details summary:focus-visible {
+    outline: 2px solid var(--c-brand);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+.entry-content .wp-block-details > :not(summary) {
+    margin: 0;
+    padding-inline: 24px;
+    color: var(--c-muted);
+}
+
+.entry-content .wp-block-details > :not(summary) + :not(summary) {
+    margin-top: 0.8em;
+}
+
+.entry-content .wp-block-details > :last-child:not(summary) {
+    padding-bottom: 20px;
 }
 
 .entry-content img {

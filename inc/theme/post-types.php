@@ -53,6 +53,7 @@ function mytheme_project_fields()
         'project_year'     => __('Year', 'my-theme'),
         'project_url'      => __('Live URL', 'my-theme'),
         'project_tags'     => __('Tags (comma separated)', 'my-theme'),
+        'service_slug'     => __('Service page slug (shows this project on that service page)', 'my-theme'),
     ];
 }
 
@@ -98,7 +99,13 @@ function mytheme_save_project_meta($post_id)
         }
 
         $raw   = wp_unslash($_POST[$key]);
-        $value = 'project_url' === $key ? esc_url_raw($raw) : sanitize_text_field($raw);
+        if ('project_url' === $key) {
+            $value = esc_url_raw($raw);
+        } elseif ('service_slug' === $key) {
+            $value = sanitize_title($raw);
+        } else {
+            $value = sanitize_text_field($raw);
+        }
 
         update_post_meta($post_id, $key, $value);
     }

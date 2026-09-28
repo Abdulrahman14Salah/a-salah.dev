@@ -193,17 +193,37 @@ function mytheme_contact_url()
 
 /**
  * Services shown on the home and About pages.
+ *
+ * Each service links to the published page with the matching slug; the
+ * 'url' is empty when that page doesn't exist yet.
  */
 function mytheme_services()
 {
-    return [
-        ['icon' => 'layout', 'title' => __('WordPress Website Design & Development', 'my-theme'), 'text' => __("Professional, high-performance WordPress websites, whether it's a business site, an online store or a portfolio, with a modern design and a smooth experience for your visitors.", 'my-theme')],
-        ['icon' => 'code',   'title' => __('WordPress Plugin & Theme Development', 'my-theme'), 'text' => __('Custom plugins and themes built from scratch: secure, scalable and written around exactly what your website needs to do.', 'my-theme')],
-        ['icon' => 'gauge',  'title' => __('Website Optimization & SEO', 'my-theme'), 'text' => __('Faster loading, better Core Web Vitals and solid on-page SEO, so your site gets found and people stay on it.', 'my-theme')],
-        ['icon' => 'shield', 'title' => __('Website Maintenance & Updates', 'my-theme'), 'text' => __('Regular updates, security patches, bug fixes and performance monitoring, handled for you so the site keeps running smoothly.', 'my-theme')],
-        ['icon' => 'layers', 'title' => __('Laravel Web Development', 'my-theme'), 'text' => __('Custom web applications in Laravel: secure, fast and shaped around how your business actually works.', 'my-theme')],
-        ['icon' => 'server', 'title' => __('Hosting Management & Domain Registration', 'my-theme'), 'text' => __('Hosting setup, server configuration and domain registration, with reliable performance, security and backups.', 'my-theme')],
+    $services = [
+        ['slug' => 'wordpress-website-development',       'icon' => 'layout', 'title' => __('WordPress Website Design & Development', 'my-theme'), 'text' => __("Professional, high-performance WordPress websites, whether it's a business site, an online store or a portfolio, with a modern design and a smooth experience for your visitors.", 'my-theme')],
+        ['slug' => 'wordpress-plugin-theme-development', 'icon' => 'code',   'title' => __('WordPress Plugin & Theme Development', 'my-theme'), 'text' => __('Custom plugins and themes built from scratch: secure, scalable and written around exactly what your website needs to do.', 'my-theme')],
+        ['slug' => 'website-speed-seo',                  'icon' => 'gauge',  'title' => __('Website Optimization & SEO', 'my-theme'), 'text' => __('Faster loading, better Core Web Vitals and solid on-page SEO, so your site gets found and people stay on it.', 'my-theme')],
+        ['slug' => 'wordpress-maintenance',              'icon' => 'shield', 'title' => __('Website Maintenance & Updates', 'my-theme'), 'text' => __('Regular updates, security patches, bug fixes and performance monitoring, handled for you so the site keeps running smoothly.', 'my-theme')],
+        ['slug' => 'laravel-development',                'icon' => 'layers', 'title' => __('Laravel Web Development', 'my-theme'), 'text' => __('Custom web applications in Laravel: secure, fast and shaped around how your business actually works.', 'my-theme')],
+        ['slug' => 'hosting-domains',                    'icon' => 'server', 'title' => __('Hosting Management & Domain Registration', 'my-theme'), 'text' => __('Hosting setup, server configuration and domain registration, with reliable performance, security and backups.', 'my-theme')],
     ];
+
+    foreach ($services as &$service) {
+        $service['url'] = mytheme_published_page_url($service['slug']);
+    }
+    unset($service);
+
+    return $services;
+}
+
+/**
+ * Permalink of a published page by slug, or '' when there is none.
+ */
+function mytheme_published_page_url($slug)
+{
+    $page = get_page_by_path($slug);
+
+    return ($page && 'publish' === get_post_status($page)) ? get_permalink($page) : '';
 }
 
 function mytheme_stack()
