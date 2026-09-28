@@ -26,10 +26,22 @@ function mytheme_enqueue_assets()
         null
     );
 
+    $style_deps = ['mytheme-fonts'];
+
+    if (is_rtl()) {
+        wp_enqueue_style(
+            'mytheme-fonts-arabic',
+            'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap',
+            [],
+            null
+        );
+        $style_deps[] = 'mytheme-fonts-arabic';
+    }
+
     wp_enqueue_style(
         'mytheme-main',
         mytheme_css('main.css'),
-        ['mytheme-fonts'],
+        $style_deps,
         mytheme_asset_version('assets/css/main.css')
     );
 

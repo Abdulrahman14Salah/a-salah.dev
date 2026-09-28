@@ -11,7 +11,7 @@ $tags = mytheme_project_tags(get_the_ID());
     <a class="project-card__link" href="<?php the_permalink(); ?>">
         <div class="project-card__media">
             <?php if (has_post_thumbnail()) : ?>
-                <?php the_post_thumbnail('mytheme-card', ['alt' => '', 'loading' => 'lazy']); ?>
+                <?php the_post_thumbnail('mytheme-card', ['alt' => mytheme_thumbnail_alt(null, __('project screenshot', 'my-theme')), 'loading' => 'lazy']); ?>
             <?php else : ?>
                 <span class="media-placeholder"><?php echo mytheme_icon('image', 40); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
             <?php endif; ?>

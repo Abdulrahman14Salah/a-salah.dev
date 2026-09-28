@@ -11,7 +11,7 @@ $variant = $args['variant'] ?? 'card';
     <a class="post-card__link" href="<?php the_permalink(); ?>">
         <div class="post-card__media">
             <?php if (has_post_thumbnail()) : ?>
-                <?php the_post_thumbnail('mytheme-card', ['alt' => '', 'loading' => 'lazy']); ?>
+                <?php the_post_thumbnail('mytheme-card', ['alt' => mytheme_thumbnail_alt(), 'loading' => 'lazy']); ?>
             <?php else : ?>
                 <img class="post-card__mark" src="<?php echo esc_url(mytheme_image('mark.svg')); ?>" alt="" width="96" height="95" loading="lazy">
             <?php endif; ?>

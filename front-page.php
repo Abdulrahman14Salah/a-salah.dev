@@ -22,6 +22,8 @@ $posts = new WP_Query([
 
 $about_page = get_page_by_path('about-abdulrahman') ?: get_page_by_path('about');
 $work_url   = get_post_type_archive_link('project');
+$hero_photo = (int) mytheme_option('hero_photo');
+$hero_photo = wp_attachment_is_image($hero_photo) ? $hero_photo : 0;
 
 ?>
 
@@ -40,15 +42,27 @@ $work_url   = get_post_type_archive_link('project');
             </div>
         </div>
 
-        <div class="hero__visual" aria-hidden="true">
-            <img class="hero__mark" src="<?php echo esc_url(mytheme_image('mark.svg')); ?>" alt="" width="380" height="376">
+        <div class="hero__visual <?php echo $hero_photo ? 'hero__visual--photo' : ''; ?>" aria-hidden="true">
+            <?php if ($hero_photo) : ?>
+                <?php
+                echo wp_get_attachment_image($hero_photo, 'large', false, [
+                    'class'         => 'hero__photo',
+                    'loading'       => false,
+                    'fetchpriority' => 'high',
+                    'decoding'      => 'async',
+                    'sizes'         => '(max-width: 900px) 100vw, 600px',
+                ]);
+                ?>
+            <?php else : ?>
+                <img class="hero__mark" src="<?php echo esc_url(mytheme_image('mark.svg')); ?>" alt="" width="380" height="376">
+            <?php endif; ?>
             <div class="float-card float-card--stack">
                 <p class="eyebrow eyebrow--muted"><?php esc_html_e('Core stack', 'my-theme'); ?></p>
                 <ul class="chips">
-                    <li class="chip chip--blue">WordPress</li>
-                    <li class="chip chip--blue">Laravel</li>
-                    <li class="chip">PHP</li>
-                    <li class="chip">Tailwind</li>
+                    <li class="chip chip--blue"><?php esc_html_e('WordPress', 'my-theme'); ?></li>
+                    <li class="chip chip--blue"><?php esc_html_e('Laravel', 'my-theme'); ?></li>
+                    <li class="chip"><?php esc_html_e('PHP', 'my-theme'); ?></li>
+                    <li class="chip"><?php esc_html_e('Tailwind', 'my-theme'); ?></li>
                 </ul>
             </div>
             <div class="float-card float-card--badge">
@@ -123,6 +137,8 @@ $work_url   = get_post_type_archive_link('project');
         </div>
     </div>
 </section>
+
+<?php get_template_part('template-parts/sections/testimonials'); ?>
 
 <section class="section">
     <div class="container about-teaser">

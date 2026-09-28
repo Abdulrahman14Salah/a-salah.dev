@@ -47,7 +47,7 @@ while (have_posts()) :
 
         <?php if (has_post_thumbnail()) : ?>
             <div class="container case-study__figure">
-                <?php the_post_thumbnail('mytheme-wide', ['loading' => 'eager', 'fetchpriority' => 'high']); ?>
+                <?php the_post_thumbnail('mytheme-wide', ['alt' => mytheme_thumbnail_alt(null, __('project screenshot', 'my-theme')), 'loading' => 'eager', 'fetchpriority' => 'high']); ?>
             </div>
         <?php endif; ?>
 

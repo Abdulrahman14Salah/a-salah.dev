@@ -29,7 +29,7 @@ $categories = get_the_category();
 
     <?php if (has_post_thumbnail()) : ?>
         <div class="container article__figure">
-            <?php the_post_thumbnail('mytheme-wide', ['loading' => 'eager', 'fetchpriority' => 'high']); ?>
+            <?php the_post_thumbnail('mytheme-wide', ['alt' => mytheme_thumbnail_alt(), 'loading' => 'eager', 'fetchpriority' => 'high']); ?>
         </div>
     <?php endif; ?>
 
@@ -48,8 +48,13 @@ $categories = get_the_category();
         <?php the_tags('<ul class="chips article__tags"><li class="chip">', '</li><li class="chip">', '</li></ul>'); ?>
 
         <nav class="post-nav" aria-label="<?php esc_attr_e('More articles', 'my-theme'); ?>">
-            <?php previous_post_link('<div class="post-nav__prev">%link</div>', '← %title'); ?>
-            <?php next_post_link('<div class="post-nav__next">%link</div>', '%title →'); ?>
+            <?php
+            // Arrows point the way the text reads: backwards is "start", forwards is "end".
+            $back    = is_rtl() ? '→' : '←';
+            $forward = is_rtl() ? '←' : '→';
+            previous_post_link('<div class="post-nav__prev">%link</div>', $back . ' %title');
+            next_post_link('<div class="post-nav__next">%link</div>', '%title ' . $forward);
+            ?>
         </nav>
     </div>
 </article>

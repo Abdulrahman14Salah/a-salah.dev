@@ -34,6 +34,12 @@ $credit = mytheme_option('footer_credit');
         </div>
     </footer>
 
+    <?php if (mytheme_show_whatsapp_float()) : ?>
+        <a class="wa-float" href="<?php echo esc_url(mytheme_whatsapp_url()); ?>" rel="noopener" target="_blank" aria-label="<?php esc_attr_e('Chat on WhatsApp', 'my-theme'); ?>">
+            <?php echo mytheme_icon('chat', 26); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+        </a>
+    <?php endif; ?>
+
     <?php wp_footer(); ?>
 
 </body>

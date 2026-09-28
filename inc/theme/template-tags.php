@@ -37,10 +37,11 @@ function mytheme_icon($name, $size = 24, $class = '')
     }
 
     return sprintf(
-        '<svg class="icon %1$s" width="%2$d" height="%2$d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">%3$s</svg>',
+        '<svg class="icon icon-%4$s %1$s" width="%2$d" height="%2$d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">%3$s</svg>',
         esc_attr($class),
         (int) $size,
-        $paths[$name]
+        $paths[$name],
+        esc_attr($name)
     );
 }
 
@@ -88,8 +89,8 @@ function mytheme_menu_fallback($args = [])
 function mytheme_social_menu_fallback($args = [])
 {
     $links = [
-        'GitHub'   => mytheme_option('social_github'),
-        'LinkedIn' => mytheme_option('social_linkedin'),
+        __('GitHub', 'my-theme')   => mytheme_option('social_github'),
+        __('LinkedIn', 'my-theme') => mytheme_option('social_linkedin'),
     ];
 
     $items = '';
@@ -192,22 +193,74 @@ function mytheme_contact_url()
 
 /**
  * Services shown on the home and About pages.
+ *
+ * Each service links to the published page with the matching slug; the
+ * 'url' is empty when that page doesn't exist yet.
  */
 function mytheme_services()
 {
-    return [
-        ['icon' => 'layout', 'title' => __('WordPress Website Design & Development', 'my-theme'), 'text' => __("Professional, high-performance WordPress websites, whether it's a business site, an online store or a portfolio, with a modern design and a smooth experience for your visitors.", 'my-theme')],
-        ['icon' => 'code',   'title' => __('WordPress Plugin & Theme Development', 'my-theme'), 'text' => __('Custom plugins and themes built from scratch: secure, scalable and written around exactly what your website needs to do.', 'my-theme')],
-        ['icon' => 'gauge',  'title' => __('Website Optimization & SEO', 'my-theme'), 'text' => __('Faster loading, better Core Web Vitals and solid on-page SEO, so your site gets found and people stay on it.', 'my-theme')],
-        ['icon' => 'shield', 'title' => __('Website Maintenance & Updates', 'my-theme'), 'text' => __('Regular updates, security patches, bug fixes and performance monitoring, handled for you so the site keeps running smoothly.', 'my-theme')],
-        ['icon' => 'layers', 'title' => __('Laravel Web Development', 'my-theme'), 'text' => __('Custom web applications in Laravel: secure, fast and shaped around how your business actually works.', 'my-theme')],
-        ['icon' => 'server', 'title' => __('Hosting Management & Domain Registration', 'my-theme'), 'text' => __('Hosting setup, server configuration and domain registration, with reliable performance, security and backups.', 'my-theme')],
+    $services = [
+        ['slug' => 'wordpress-website-development',       'icon' => 'layout', 'title' => __('WordPress Website Design & Development', 'my-theme'), 'text' => __("Professional, high-performance WordPress websites, whether it's a business site, an online store or a portfolio, with a modern design and a smooth experience for your visitors.", 'my-theme')],
+        ['slug' => 'wordpress-plugin-theme-development', 'icon' => 'code',   'title' => __('WordPress Plugin & Theme Development', 'my-theme'), 'text' => __('Custom plugins and themes built from scratch: secure, scalable and written around exactly what your website needs to do.', 'my-theme')],
+        ['slug' => 'website-speed-seo',                  'icon' => 'gauge',  'title' => __('Website Optimization & SEO', 'my-theme'), 'text' => __('Faster loading, better Core Web Vitals and solid on-page SEO, so your site gets found and people stay on it.', 'my-theme')],
+        ['slug' => 'wordpress-maintenance',              'icon' => 'shield', 'title' => __('Website Maintenance & Updates', 'my-theme'), 'text' => __('Regular updates, security patches, bug fixes and performance monitoring, handled for you so the site keeps running smoothly.', 'my-theme')],
+        ['slug' => 'laravel-development',                'icon' => 'layers', 'title' => __('Laravel Web Development', 'my-theme'), 'text' => __('Custom web applications in Laravel: secure, fast and shaped around how your business actually works.', 'my-theme')],
+        ['slug' => 'hosting-domains',                    'icon' => 'server', 'title' => __('Hosting Management & Domain Registration', 'my-theme'), 'text' => __('Hosting setup, server configuration and domain registration, with reliable performance, security and backups.', 'my-theme')],
     ];
+
+    foreach ($services as &$service) {
+        $service['url'] = mytheme_published_page_url($service['slug']);
+    }
+    unset($service);
+
+    return $services;
+}
+
+/**
+ * Permalink of a published page by slug, or '' when there is none.
+ */
+function mytheme_published_page_url($slug)
+{
+    $page = get_page_by_path($slug);
+
+    return ($page && 'publish' === get_post_status($page)) ? get_permalink($page) : '';
 }
 
 function mytheme_stack()
 {
-    return ['WordPress', 'Laravel', 'PHP', 'SQL', 'HTML', 'CSS', 'JavaScript', 'SCSS', 'Tailwind', 'Bootstrap', 'Shopify', 'GitHub'];
+    return [
+        __('WordPress', 'my-theme'),
+        __('Laravel', 'my-theme'),
+        __('PHP', 'my-theme'),
+        __('SQL', 'my-theme'),
+        __('HTML', 'my-theme'),
+        __('CSS', 'my-theme'),
+        __('JavaScript', 'my-theme'),
+        __('SCSS', 'my-theme'),
+        __('Tailwind', 'my-theme'),
+        __('Bootstrap', 'my-theme'),
+        __('Shopify', 'my-theme'),
+        __('GitHub', 'my-theme'),
+    ];
+}
+
+/**
+ * Alt text for a post's featured image: the image's own alt text, else the
+ * post title with an optional context, e.g. "Aawan Website — project screenshot".
+ */
+function mytheme_thumbnail_alt($post_id = null, $context = '')
+{
+    $post_id = $post_id ?: get_the_ID();
+    $alt     = trim((string) get_post_meta(get_post_thumbnail_id($post_id), '_wp_attachment_image_alt', true));
+
+    if ('' !== $alt) {
+        return $alt;
+    }
+
+    $title = wp_strip_all_tags(get_the_title($post_id));
+
+    /* translators: 1: post title, 2: what the image shows, e.g. "project screenshot". */
+    return $context ? sprintf(__('%1$s — %2$s', 'my-theme'), $title, $context) : $title;
 }
 
 /**
@@ -261,7 +314,7 @@ function mytheme_post_meta_line($post_id = null)
         $parts[] = $categories[0]->name;
     }
 
-    $parts[] = get_the_date('F Y', $post_id);
+    $parts[] = get_the_date(_x('F Y', 'post card date format', 'my-theme'), $post_id);
 
     return implode(' · ', $parts);
 }

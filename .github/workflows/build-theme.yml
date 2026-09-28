@@ -4,6 +4,9 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,6 +35,10 @@ jobs:
           --exclude=".git" \
           --exclude=".github" \
           --exclude="node_modules" \
+          --exclude=".idea" \
+          --exclude="README.md" \
+          --exclude="task.md" \
+          --exclude="*.patch" \
           --exclude="a-salah.dev"
 
       - name: Create zip package
@@ -39,7 +46,7 @@ jobs:
           zip -r a-salah.dev.zip a-salah.dev
 
       - name: Upload ZIP to Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
           files: a-salah.dev.zip

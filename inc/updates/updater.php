@@ -42,6 +42,13 @@ class MyTheme_GitHub_Updater
             2
         );
 
+        add_filter(
+            'upgrader_source_selection',
+            [$this, 'fix_source_folder'],
+            10,
+            4
+        );
+
         add_action(
             'upgrader_process_complete',
             [$this, 'clear_release_cache_after_theme_upgrade'],
@@ -130,7 +137,10 @@ class MyTheme_GitHub_Updater
     public function add_github_auth_headers($args, $url)
     {
 
-        if (!is_string($url) || strpos($url, 'api.github.com/') === false) {
+        // Only this repository's API calls: never send the token anywhere else.
+        $repo_api = 'https://api.github.com/repos/' . MYTHEME_GITHUB_USER . '/' . MYTHEME_GITHUB_REPO . '/';
+
+        if (!is_string($url) || stripos($url, $repo_api) !== 0) {
             return $args;
         }
 
@@ -150,6 +160,39 @@ class MyTheme_GitHub_Updater
         }
 
         return $args;
+    }
+
+    /**
+     * GitHub ZIPs may extract to a folder named after the repo or tag. Rename it
+     * to the installed theme's folder so the update replaces the theme instead
+     * of installing a second copy next to it.
+     */
+    public function fix_source_folder($source, $remote_source, $upgrader, $hook_extra = [])
+    {
+        global $wp_filesystem;
+
+        if (!is_array($hook_extra) || ($hook_extra['theme'] ?? '') !== $this->theme_slug) {
+            return $source;
+        }
+
+        if (is_wp_error($source) || !$wp_filesystem) {
+            return $source;
+        }
+
+        $expected = trailingslashit($remote_source) . $this->theme_slug . '/';
+
+        if (untrailingslashit($source) === untrailingslashit($expected)) {
+            return $source;
+        }
+
+        if (!$wp_filesystem->move(untrailingslashit($source), untrailingslashit($expected), true)) {
+            return new WP_Error(
+                'mytheme_rename_failed',
+                __('The theme update could not be installed: its folder could not be renamed.', 'my-theme')
+            );
+        }
+
+        return $expected;
     }
 
     public function clear_release_cache_after_theme_upgrade($upgrader, $hook_extra)
@@ -237,10 +280,8 @@ class MyTheme_GitHub_Updater
             }
         }
 
-        if (!empty($release->zipball_url)) {
-            return (string) $release->zipball_url;
-        }
-
+        // No built theme ZIP on the release means no update. The source zipball
+        // contains the whole repo in a differently named folder.
         return '';
     }
 }
