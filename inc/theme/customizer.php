@@ -30,6 +30,10 @@ function mytheme_option_defaults()
         'hero_photo'        => 0,
         'hero_text'         => __("I'm Abdulrahman Salah. I design and build WordPress and Laravel websites for companies, organizations and public figures, then keep them secure and up to date.", 'my-theme'),
         'footer_credit'     => __('Designed and developed by Arqam Web', 'my-theme'),
+        'price_website'     => '',
+        'price_maintenance' => '',
+        'price_hosting'     => '',
+        'adsense_client'    => '',
     ];
 }
 
@@ -61,6 +65,10 @@ function mytheme_customize_register($wp_customize)
         'social_linkedin'   => [__('LinkedIn URL', 'my-theme'), 'url', 'esc_url_raw'],
         'contact_form'      => [__('Contact form shortcode (e.g. Contact Form 7)', 'my-theme'), 'text', 'mytheme_sanitize_shortcode'],
         'footer_credit'     => [__('Footer credit', 'my-theme'), 'text', 'sanitize_text_field'],
+        'price_website'     => [__('Price: WordPress website, starting from, with currency. Empty hides the card.', 'my-theme'), 'text', 'sanitize_text_field'],
+        'price_maintenance' => [__('Price: monthly maintenance, with currency. Empty hides the card.', 'my-theme'), 'text', 'sanitize_text_field'],
+        'price_hosting'     => [__('Price: yearly hosting, with currency. Empty hides the card.', 'my-theme'), 'text', 'sanitize_text_field'],
+        'adsense_client'    => [__('AdSense publisher ID (pub-…). Loads ads on blog posts only and serves /ads.txt.', 'my-theme'), 'text', 'mytheme_sanitize_adsense_client'],
     ];
 
     $defaults = mytheme_option_defaults();
@@ -100,6 +108,14 @@ add_action('customize_register', 'mytheme_customize_register');
 function mytheme_sanitize_shortcode($value)
 {
     return trim(wp_strip_all_tags((string) $value));
+}
+
+/**
+ * Keep only the "pub-1234567890" part of whatever was pasted (ca-pub-…, a full ads.txt line, …).
+ */
+function mytheme_sanitize_adsense_client($value)
+{
+    return preg_match('/pub-\d{10,20}/', (string) $value, $match) ? $match[0] : '';
 }
 
 function mytheme_sanitize_checkbox($value)

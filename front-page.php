@@ -6,13 +6,6 @@ if (! defined('ABSPATH')) {
 
 get_header();
 
-$projects = new WP_Query([
-    'post_type'           => 'project',
-    'posts_per_page'      => 3,
-    'ignore_sticky_posts' => true,
-    'no_found_rows'       => true,
-]);
-
 $posts = new WP_Query([
     'post_type'           => 'post',
     'posts_per_page'      => 3,
@@ -21,7 +14,6 @@ $posts = new WP_Query([
 ]);
 
 $about_page = get_page_by_path('about-abdulrahman') ?: get_page_by_path('about');
-$work_url   = get_post_type_archive_link('project');
 $hero_photo = (int) mytheme_option('hero_photo');
 $hero_photo = wp_attachment_is_image($hero_photo) ? $hero_photo : 0;
 
@@ -101,44 +93,47 @@ $hero_photo = wp_attachment_is_image($hero_photo) ? $hero_photo : 0;
 
 <section id="work" class="section section--tinted">
     <div class="container">
-        <div class="section-head section-head--row">
-            <div>
-                <?php mytheme_eyebrow(__('Selected work', 'my-theme')); ?>
-                <h2 class="section-title"><?php esc_html_e('Recent projects', 'my-theme'); ?></h2>
+        <div class="work-panel">
+            <div class="work-panel__copy">
+                <p class="work-panel__eyebrow">
+                    <span class="eyebrow"><?php esc_html_e('Selected work', 'my-theme'); ?></span>
+                    <span class="work-panel__dot" aria-hidden="true"></span>
+                    <span class="eyebrow eyebrow--muted"><?php esc_html_e('At Arqam Web', 'my-theme'); ?></span>
+                </p>
+                <h2 class="section-title work-panel__title">
+                    <?php
+                    printf(
+                        /* translators: %s: agency name, highlighted. */
+                        esc_html__('My client work lives at %s.', 'my-theme'),
+                        '<span class="text-accent">' . esc_html__('Arqam Web', 'my-theme') . '</span>'
+                    );
+                    ?>
+                </h2>
+                <p class="section-lead work-panel__text"><?php esc_html_e("I build websites as part of Arqam Web, a Cairo web agency working with clients in Egypt, Saudi Arabia, the UAE and the US. You can browse the projects I've worked on, along with the rest of the team's work, in the Arqam Web portfolio.", 'my-theme'); ?></p>
             </div>
-            <?php if ($work_url && $projects->have_posts()) : ?>
-                <a class="text-link" href="<?php echo esc_url($work_url); ?>"><?php esc_html_e('All projects', 'my-theme'); ?> <?php echo mytheme_icon('arrow', 16); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
-            <?php endif; ?>
-        </div>
 
-        <div class="work-grid">
-            <?php
-            $count = 0;
-            while ($projects->have_posts()) :
-                $projects->the_post();
-                $count++;
-                ?>
-                <div class="work-grid__item <?php echo 1 === $count ? 'work-grid__item--featured' : ''; ?>">
-                    <?php get_template_part('template-parts/cards/project'); ?>
+            <div class="work-panel__aside">
+                <div class="work-panel__agency">
+                    <span class="work-panel__mark" aria-hidden="true">A</span>
+                    <span class="work-panel__agency-text">
+                        <span class="work-panel__agency-name"><?php esc_html_e('Arqam Web', 'my-theme'); ?></span>
+                        <span class="work-panel__agency-meta"><?php esc_html_e('Web & digital agency · Cairo', 'my-theme'); ?></span>
+                    </span>
                 </div>
-            <?php endwhile; ?>
-            <?php wp_reset_postdata(); ?>
-
-            <?php if ($count < 3) : ?>
-                <div class="work-grid__item next-card">
-                    <p class="eyebrow eyebrow--muted"><?php esc_html_e('Next project', 'my-theme'); ?></p>
-                    <div>
-                        <h3 class="next-card__title"><?php esc_html_e('Your website could be next.', 'my-theme'); ?></h3>
-                        <p><?php esc_html_e("Tell me about your idea and I'll come back with a plan and a quote.", 'my-theme'); ?></p>
-                        <a class="button button--dark button--sm" href="<?php echo esc_url(mytheme_contact_url()); ?>"><?php esc_html_e('Get a quote', 'my-theme'); ?></a>
-                    </div>
-                </div>
-            <?php endif; ?>
+                <a class="button" href="https://www.arqamweb.com/our-projects/" target="_blank" rel="noopener">
+                    <?php esc_html_e('See projects on Arqam Web', 'my-theme'); ?>
+                    <?php echo mytheme_icon('external', 18); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    <span class="screen-reader-text"><?php esc_html_e('(opens in a new tab)', 'my-theme'); ?></span>
+                </a>
+                <a class="button button--outline" href="<?php echo esc_url(mytheme_contact_url()); ?>"><?php esc_html_e('Get a quote', 'my-theme'); ?></a>
+            </div>
         </div>
     </div>
 </section>
 
 <?php get_template_part('template-parts/sections/testimonials'); ?>
+
+<?php get_template_part('template-parts/sections/pricing'); ?>
 
 <section class="section">
     <div class="container about-teaser">
@@ -183,6 +178,8 @@ $hero_photo = wp_attachment_is_image($hero_photo) ? $hero_photo : 0;
         </div>
     </section>
 <?php endif; ?>
+
+<?php get_template_part('template-parts/sections/audit'); ?>
 
 <?php get_template_part('template-parts/sections/contact-cta'); ?>
 

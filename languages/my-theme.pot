@@ -2,14 +2,14 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: A-Salah 1.0.27\n"
-"Report-Msgid-Bugs-To: https://github.com/Abdulrahman14Salah/a-salah.dev/issues\n"
+"Project-Id-Version: A-Salah 1.0.28\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/a-salah.dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-28T00:44:23+00:00\n"
+"POT-Creation-Date: 2026-09-29T23:52:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: my-theme\n"
@@ -103,140 +103,151 @@ msgstr ""
 msgid "Chat on WhatsApp"
 msgstr ""
 
-#: front-page.php:40
+#: front-page.php:32
 msgid "Start your website"
 msgstr ""
 
-#: front-page.php:41
+#: front-page.php:33
 msgid "See my work"
 msgstr ""
 
-#: front-page.php:60
+#: front-page.php:52
 msgid "Core stack"
 msgstr ""
 
-#: front-page.php:62
+#: front-page.php:54
 #: inc/theme/template-tags.php:232
 msgid "WordPress"
 msgstr ""
 
-#: front-page.php:63
+#: front-page.php:55
 #: inc/theme/template-tags.php:233
 msgid "Laravel"
 msgstr ""
 
-#: front-page.php:64
+#: front-page.php:56
 #: inc/theme/template-tags.php:234
 msgid "PHP"
 msgstr ""
 
-#: front-page.php:65
+#: front-page.php:57
 #: inc/theme/template-tags.php:240
 msgid "Tailwind"
 msgstr ""
 
-#: front-page.php:70
+#: front-page.php:62
 msgid "Maintained & secured"
 msgstr ""
 
-#: front-page.php:79
+#: front-page.php:71
 msgid "Tools I work with"
 msgstr ""
 
-#: front-page.php:93
+#: front-page.php:85
 #: page-templates/about.php:48
 msgid "Services"
 msgstr ""
 
-#: front-page.php:94
+#: front-page.php:86
 msgid "Built for businesses like yours"
 msgstr ""
 
-#: front-page.php:96
+#: front-page.php:88
 msgid "From the first design to the monthly updates: WordPress sites, custom plugins and themes, speed and SEO work, maintenance, Laravel applications, and hosting and domains."
 msgstr ""
 
-#: front-page.php:106
+#: front-page.php:99
 msgid "Selected work"
 msgstr ""
 
+#: front-page.php:101
+msgid "At Arqam Web"
+msgstr ""
+
+#. translators: %s: agency name, highlighted.
 #: front-page.php:107
-msgid "Recent projects"
+#, php-format
+msgid "My client work lives at %s."
 msgstr ""
 
-#: front-page.php:110
-#: page-templates/service.php:77
-msgid "All projects"
+#: front-page.php:108
+#: front-page.php:119
+msgid "Arqam Web"
 msgstr ""
 
-#: front-page.php:129
-msgid "Next project"
+#: front-page.php:112
+msgid "I build websites as part of Arqam Web, a Cairo web agency working with clients in Egypt, Saudi Arabia, the UAE and the US. You can browse the projects I've worked on, along with the rest of the team's work, in the Arqam Web portfolio."
 msgstr ""
 
-#: front-page.php:131
-msgid "Your website could be next."
+#: front-page.php:120
+msgid "Web & digital agency · Cairo"
 msgstr ""
 
-#: front-page.php:132
-msgid "Tell me about your idea and I'll come back with a plan and a quote."
+#: front-page.php:124
+msgid "See projects on Arqam Web"
 msgstr ""
 
-#: front-page.php:133
+#: front-page.php:126
+msgid "(opens in a new tab)"
+msgstr ""
+
+#: front-page.php:128
 #: template-parts/header/navigation.php:26
+#: template-parts/sections/pricing.php:98
 msgid "Get a quote"
 msgstr ""
 
 #. Template Name of the theme
-#: front-page.php:146
+#: front-page.php:141
 msgid "About"
 msgstr ""
 
-#: front-page.php:147
+#: front-page.php:142
 msgid "One developer, from the first line to launch day."
 msgstr ""
 
-#: front-page.php:150
+#: front-page.php:145
 msgid "I specialize in professional, high-performance websites built around each client's needs. The goal is always the same: meet the technical requirements, and make the site easier to use, more engaging, and better at bringing in business."
 msgstr ""
 
-#: front-page.php:152
+#: front-page.php:147
 msgid "Quality"
 msgstr ""
 
-#: front-page.php:152
+#: front-page.php:147
 msgid "Clean code and careful builds."
 msgstr ""
 
-#: front-page.php:153
+#: front-page.php:148
 msgid "Transparency"
 msgstr ""
 
-#: front-page.php:153
+#: front-page.php:148
 msgid "Clear scope, clear updates."
 msgstr ""
 
-#: front-page.php:154
+#: front-page.php:149
 msgid "Satisfaction"
 msgstr ""
 
-#: front-page.php:154
+#: front-page.php:149
 msgid "Done when you're happy with it."
 msgstr ""
 
-#: front-page.php:157
+#: front-page.php:152
 msgid "More about Abdulrahman"
 msgstr ""
 
-#: front-page.php:168
+#: front-page.php:163
 #: page-templates/service.php:99
 msgid "From the blog"
 msgstr ""
 
-#: front-page.php:169
+#: front-page.php:164
 msgid "Latest writing"
 msgstr ""
 
-#: front-page.php:171
+#: front-page.php:166
 #: page-templates/service.php:102
 msgid "All articles"
 msgstr ""
@@ -269,6 +280,26 @@ msgstr ""
 msgid "Footer: Legal"
 msgstr ""
 
+#: inc/monetization/monetization.php:78
+msgid "Affiliate links:"
+msgstr ""
+
+#: inc/monetization/monetization.php:78
+msgid "some links in this article are affiliate links. If you buy through them I may earn a commission, at no extra cost to you. I only recommend services I use or would use on client sites."
+msgstr ""
+
+#: inc/monetization/monetization.php:100
+msgid "Affiliate links"
+msgstr ""
+
+#: inc/monetization/monetization.php:111
+msgid "Contains affiliate links"
+msgstr ""
+
+#: inc/monetization/monetization.php:112
+msgid "Shows the disclosure notice above the article. Mark the links themselves rel=\"sponsored\"."
+msgstr ""
+
 #: inc/theme/customizer.php:27
 msgid "WordPress & Laravel Developer"
 msgstr ""
@@ -289,65 +320,122 @@ msgstr ""
 msgid "Designed and developed by Arqam Web"
 msgstr ""
 
-#: inc/theme/customizer.php:47
+#: inc/theme/customizer.php:51
 msgid "Theme Options"
 msgstr ""
 
-#: inc/theme/customizer.php:52
+#: inc/theme/customizer.php:56
 msgid "Hero label"
 msgstr ""
 
-#: inc/theme/customizer.php:53
+#: inc/theme/customizer.php:57
 msgid "Hero title"
 msgstr ""
 
-#: inc/theme/customizer.php:54
+#: inc/theme/customizer.php:58
 msgid "Hero title (blue part)"
 msgstr ""
 
-#: inc/theme/customizer.php:55
+#: inc/theme/customizer.php:59
 msgid "Hero text"
 msgstr ""
 
-#: inc/theme/customizer.php:56
+#: inc/theme/customizer.php:60
 #: page-templates/contact.php:35
+#: template-parts/sections/audit.php:44
 msgid "Email"
 msgstr ""
 
-#: inc/theme/customizer.php:57
+#: inc/theme/customizer.php:61
 msgid "Phone (international format)"
 msgstr ""
 
-#: inc/theme/customizer.php:58
+#: inc/theme/customizer.php:62
 msgid "WhatsApp number (digits only)"
 msgstr ""
 
-#: inc/theme/customizer.php:59
+#: inc/theme/customizer.php:63
 msgid "Show the floating WhatsApp button"
 msgstr ""
 
-#: inc/theme/customizer.php:60
+#: inc/theme/customizer.php:64
 msgid "GitHub URL"
 msgstr ""
 
-#: inc/theme/customizer.php:61
+#: inc/theme/customizer.php:65
 msgid "LinkedIn URL"
 msgstr ""
 
-#: inc/theme/customizer.php:62
+#: inc/theme/customizer.php:66
 msgid "Contact form shortcode (e.g. Contact Form 7)"
 msgstr ""
 
-#: inc/theme/customizer.php:63
+#: inc/theme/customizer.php:67
 msgid "Footer credit"
 msgstr ""
 
-#: inc/theme/customizer.php:87
+#: inc/theme/customizer.php:68
+msgid "Price: WordPress website, starting from, with currency. Empty hides the card."
+msgstr ""
+
+#: inc/theme/customizer.php:69
+msgid "Price: monthly maintenance, with currency. Empty hides the card."
+msgstr ""
+
+#: inc/theme/customizer.php:70
+msgid "Price: yearly hosting, with currency. Empty hides the card."
+msgstr ""
+
+#: inc/theme/customizer.php:71
+msgid "AdSense publisher ID (pub-…). Loads ads on blog posts only and serves /ads.txt."
+msgstr ""
+
+#: inc/theme/customizer.php:95
 msgid "Hero photo"
 msgstr ""
 
-#: inc/theme/customizer.php:88
+#: inc/theme/customizer.php:96
 msgid "Shown in the home page hero instead of the logo mark."
+msgstr ""
+
+#: inc/theme/leads.php:22
+#: inc/theme/leads.php:24
+msgid "Audit requests"
+msgstr ""
+
+#: inc/theme/leads.php:23
+#: inc/theme/leads.php:25
+msgid "Audit request"
+msgstr ""
+
+#. translators: %s: the visitor's name.
+#: inc/theme/leads.php:87
+#, php-format
+msgid "Name: %s"
+msgstr ""
+
+#. translators: %s: the visitor's email address.
+#: inc/theme/leads.php:89
+#, php-format
+msgid "Email: %s"
+msgstr ""
+
+#. translators: %s: the website to audit.
+#: inc/theme/leads.php:91
+#, php-format
+msgid "Website: %s"
+msgstr ""
+
+#. translators: %s: what the visitor wants to improve.
+#: inc/theme/leads.php:94
+#, php-format
+msgid "What they want to improve: %s"
+msgstr ""
+
+#. translators: %s: the website's domain.
+#: inc/theme/leads.php:109
+#, php-format
+msgid "Free audit request: %s"
 msgstr ""
 
 #: inc/theme/post-types.php:26
@@ -635,6 +723,10 @@ msgstr ""
 msgid "Related work"
 msgstr ""
 
+#: page-templates/service.php:77
+msgid "All projects"
+msgstr ""
+
 #: single-project.php:41
 msgid "Live site"
 msgstr ""
@@ -677,6 +769,50 @@ msgstr ""
 msgid "Main"
 msgstr ""
 
+#: template-parts/sections/audit.php:9
+msgid "Thanks! I'll look at your site and email you what I find."
+msgstr ""
+
+#: template-parts/sections/audit.php:10
+msgid "Please add your name, a valid email and your website address."
+msgstr ""
+
+#: template-parts/sections/audit.php:11
+msgid "Something went wrong. Please try again, or message me on WhatsApp."
+msgstr ""
+
+#: template-parts/sections/audit.php:19
+msgid "Free website audit"
+msgstr ""
+
+#: template-parts/sections/audit.php:20
+msgid "Not sure what your site needs? Start with a free audit."
+msgstr ""
+
+#: template-parts/sections/audit.php:21
+msgid "Send me your website address. I'll check its speed, SEO basics, security and mobile layout, and email you a short list of what to fix first."
+msgstr ""
+
+#: template-parts/sections/audit.php:33
+msgid "Leave this empty"
+msgstr ""
+
+#: template-parts/sections/audit.php:37
+msgid "Your website"
+msgstr ""
+
+#: template-parts/sections/audit.php:41
+msgid "Name"
+msgstr ""
+
+#: template-parts/sections/audit.php:48
+msgid "What would you like to improve? (optional)"
+msgstr ""
+
+#: template-parts/sections/audit.php:51
+msgid "Get my free audit"
+msgstr ""
+
 #: template-parts/sections/contact-cta.php:17
 msgid "Let's talk"
 msgstr ""
@@ -703,6 +839,114 @@ msgstr ""
 
 #: template-parts/sections/post-loop.php:32
 msgid "New content is on the way. Check back soon."
+msgstr ""
+
+#: template-parts/sections/pricing.php:15
+msgid "WordPress website"
+msgstr ""
+
+#: template-parts/sections/pricing.php:16
+msgid "Starting from"
+msgstr ""
+
+#: template-parts/sections/pricing.php:18
+msgid "A one-off build, designed around your business and ready to launch."
+msgstr ""
+
+#: template-parts/sections/pricing.php:21
+msgid "Custom design for your brand"
+msgstr ""
+
+#: template-parts/sections/pricing.php:22
+msgid "Fast and mobile-first"
+msgstr ""
+
+#: template-parts/sections/pricing.php:23
+msgid "On-page SEO set up from day one"
+msgstr ""
+
+#: template-parts/sections/pricing.php:24
+msgid "Contact form and WhatsApp button"
+msgstr ""
+
+#: template-parts/sections/pricing.php:25
+msgid "A walkthrough so you can edit your own content"
+msgstr ""
+
+#: template-parts/sections/pricing.php:30
+msgid "Monthly maintenance"
+msgstr ""
+
+#: template-parts/sections/pricing.php:32
+msgid "/ month"
+msgstr ""
+
+#: template-parts/sections/pricing.php:33
+msgid "I keep your site updated, secure and fast, so you never have to think about it."
+msgstr ""
+
+#: template-parts/sections/pricing.php:36
+msgid "WordPress, theme and plugin updates"
+msgstr ""
+
+#: template-parts/sections/pricing.php:37
+msgid "Security monitoring and fixes"
+msgstr ""
+
+#: template-parts/sections/pricing.php:38
+msgid "Regular backups"
+msgstr ""
+
+#: template-parts/sections/pricing.php:39
+msgid "Speed checks"
+msgstr ""
+
+#: template-parts/sections/pricing.php:40
+msgid "Small content edits"
+msgstr ""
+
+#: template-parts/sections/pricing.php:45
+msgid "Hosting"
+msgstr ""
+
+#: template-parts/sections/pricing.php:47
+msgid "/ year"
+msgstr ""
+
+#: template-parts/sections/pricing.php:48
+msgid "Managed hosting for WordPress, set up and looked after for you."
+msgstr ""
+
+#: template-parts/sections/pricing.php:51
+msgid "Server set up for WordPress"
+msgstr ""
+
+#: template-parts/sections/pricing.php:52
+msgid "SSL certificate"
+msgstr ""
+
+#: template-parts/sections/pricing.php:53
+msgid "Domain connection"
+msgstr ""
+
+#: template-parts/sections/pricing.php:54
+msgid "Uptime monitoring"
+msgstr ""
+
+#: template-parts/sections/pricing.php:70
+msgid "Pricing"
+msgstr ""
+
+#: template-parts/sections/pricing.php:71
+msgid "Clear prices, no surprises"
+msgstr ""
+
+#: template-parts/sections/pricing.php:73
+msgid "Every project gets a fixed quote before any work starts. These are the starting points."
+msgstr ""
+
+#: template-parts/sections/pricing.php:82
+msgid "Recommended"
 msgstr ""
 
 #: template-parts/sections/services.php:38
