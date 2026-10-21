@@ -28,7 +28,16 @@ $credit = mytheme_option('footer_credit');
             <div class="site-footer__bottom">
                 <span>&copy; <?php echo esc_html(wp_date('Y')); ?> <?php bloginfo('name'); ?>. <?php esc_html_e('All rights reserved.', 'my-theme'); ?></span>
                 <?php if ($credit) : ?>
-                    <span><?php echo esc_html($credit); ?></span>
+                    <?php
+                    // Escape first, then link the "Arqam Web" substring — the inserted
+                    // markup is a static trusted string, so this stays XSS-safe.
+                    $credit_html = str_replace(
+                        'Arqam Web',
+                        '<a href="https://arqamweb.com" target="_blank" rel="noopener">Arqam Web</a>',
+                        esc_html($credit)
+                    );
+                    ?>
+                    <span><?php echo $credit_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above, link markup is static ?></span>
                 <?php endif; ?>
             </div>
         </div>
