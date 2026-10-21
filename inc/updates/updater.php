@@ -55,6 +55,27 @@ class MyTheme_GitHub_Updater
             10,
             2
         );
+
+        // Force WordPress's background auto-update cron to install updates
+        // for this theme on its own, without relying on the admin's
+        // "Enable auto-updates" toggle (themes don't always surface that
+        // link in wp-admin the way plugins do).
+        add_filter(
+            'auto_update_theme',
+            [$this, 'force_auto_update'],
+            10,
+            2
+        );
+    }
+
+    public function force_auto_update($update, $item)
+    {
+
+        if (isset($item->theme) && $item->theme === $this->theme_slug) {
+            return true;
+        }
+
+        return $update;
     }
 
     public function check_update($transient)
