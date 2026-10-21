@@ -1,0 +1,48 @@
+name: Auto Release
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "README.md"
+      - "task.md"
+      - ".github/**"
+
+permissions:
+  contents: write
+
+jobs:
+  auto-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute next version
+        id: version
+        run: |
+          # Base on the latest existing git tag (not style.css, which the
+          # build workflow only bumps inside the release zip, never commits
+          # back to main) so repeated pushes never collide on the same tag.
+          latest_tag=$(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' | sed 's/^v//' | sort -t. -k1,1n -k2,2n -k3,3n | tail -1)
+          if [ -z "$latest_tag" ]; then
+            latest_tag="1.0.0"
+          fi
+          echo "Latest tag: v$latest_tag"
+          IFS='.' read -r major minor patch <<< "$latest_tag"
+          patch=$((patch + 1))
+          next="$major.$minor.$patch"
+          echo "Next version: $next"
+          echo "version=$next" >> "$GITHUB_OUTPUT"
+          echo "tag=v$next" >> "$GITHUB_OUTPUT"
+
+      - name: Create and publish release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            --title "Version ${{ steps.version.outputs.version }}" \
+            --generate-notes \
+            --target "${{ github.sha }}"
