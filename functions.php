@@ -48,3 +48,5 @@ add_action('after_setup_theme', function () {
         new MyTheme_GitHub_Updater();
     }
 });
+
+// test: verifying auto-release pipeline (safe to remove)
