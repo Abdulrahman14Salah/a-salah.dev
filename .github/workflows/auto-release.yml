@@ -7,6 +7,7 @@ on:
       - "README.md"
       - "task.md"
       - ".github/**"
+      - "update-manifest.json"
 
 permissions:
   contents: write
@@ -74,3 +75,37 @@ jobs:
             --title "Version ${{ steps.version.outputs.version }}" \
             --generate-notes \
             --target "${{ github.sha }}"
+
+      - name: Publish update-manifest.json (bypasses api.github.com rate limits)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          repo="${{ github.repository }}"
+          tag="${{ steps.version.outputs.tag }}"
+          html_url="https://github.com/$repo/releases/tag/$tag"
+          download_url="https://github.com/$repo/releases/download/$tag/a-salah.dev.zip"
+          notes=$(gh release view "$tag" --json body -q .body)
+
+          python3 - "$tag" "$html_url" "$download_url" "$notes" <<'PY'
+          import json, sys
+          tag, html_url, download_url, notes = sys.argv[1:5]
+          manifest = {
+              "tag_name": tag,
+              "html_url": html_url,
+              "body": notes,
+              "assets": [
+                  {
+                      "name": "a-salah.dev.zip",
+                      "browser_download_url": download_url,
+                  }
+              ],
+          }
+          with open("update-manifest.json", "w") as f:
+              json.dump(manifest, f, indent=2)
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add update-manifest.json
+          git commit -m "chore: update manifest for ${{ steps.version.outputs.tag }}"
+          git push origin main
