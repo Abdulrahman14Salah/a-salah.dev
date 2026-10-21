@@ -41,39 +41,15 @@ function a_salah_autoload_inc()
 
 a_salah_autoload_inc();
 
-
-add_action('after_setup_theme', function () {
-
-    if (class_exists('MyTheme_GitHub_Updater')) {
-        new MyTheme_GitHub_Updater();
-    }
-});
-
 /*
 |--------------------------------------------------------------------------
-| One-time Customizer settings migration
+| Theme updates
 |--------------------------------------------------------------------------
-| The theme's folder slug changed from "a-salah.dev" to "a-salah-theme"
-| (WordPress core strips dots when sanitizing theme slugs in its own
-| update/AJAX handlers, which silently broke both manual and automatic
-| theme updates). Customizer settings are stored per-stylesheet as
-| `theme_mods_{slug}`, so without this copy the switch would reset the
-| hero text, contact details and social links back to defaults. Safe to
-| remove once confirmed migrated — it no-ops forever after.
+| Handled by the separate "GitHub Theme Updater" plugin on the live site,
+| not by code in this theme: https://github.com/Abdulrahman14Salah/github-theme-updater
+|
+| (Removed: the former in-theme updater class, and the one-time
+| theme_mods_a-salah.dev -> theme_mods_a-salah-theme Customizer migration —
+| both already served their purpose and are confirmed done on the live
+| site, so they no longer need to ship in every release.)
 */
-add_action('after_setup_theme', function () {
-
-    $old_slug = 'a-salah.dev';
-    $new_slug = get_stylesheet();
-
-    if ($new_slug === $old_slug) {
-        return;
-    }
-
-    $old_mods = get_option("theme_mods_{$old_slug}");
-    $new_mods = get_option("theme_mods_{$new_slug}");
-
-    if ($old_mods !== false && $new_mods === false) {
-        update_option("theme_mods_{$new_slug}", $old_mods);
-    }
-});
