@@ -52,8 +52,12 @@ jobs:
 
       - name: Create theme folder
         run: |
-          mkdir a-salah.dev
-          rsync -av ./ a-salah.dev/ \
+          # Folder name must not contain a dot: WordPress core strips
+          # non [A-Za-z0-9_-] characters when sanitizing theme slugs in its
+          # own update/AJAX handlers, which silently breaks manual and
+          # automatic updates for a dotted folder name like "a-salah.dev".
+          mkdir a-salah-theme
+          rsync -av ./ a-salah-theme/ \
           --exclude=".git" \
           --exclude=".github" \
           --exclude="node_modules" \
@@ -61,17 +65,17 @@ jobs:
           --exclude="README.md" \
           --exclude="task.md" \
           --exclude="*.patch" \
-          --exclude="a-salah.dev"
+          --exclude="a-salah-theme"
 
       - name: Create zip package
-        run: zip -r a-salah.dev.zip a-salah.dev
+        run: zip -r a-salah-theme.zip a-salah-theme
 
       - name: Create release with zip attached
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "${{ steps.version.outputs.tag }}" \
-            a-salah.dev.zip \
+            a-salah-theme.zip \
             --title "Version ${{ steps.version.outputs.version }}" \
             --generate-notes \
             --target "${{ github.sha }}"
@@ -83,7 +87,7 @@ jobs:
           repo="${{ github.repository }}"
           tag="${{ steps.version.outputs.tag }}"
           html_url="https://github.com/$repo/releases/tag/$tag"
-          download_url="https://github.com/$repo/releases/download/$tag/a-salah.dev.zip"
+          download_url="https://github.com/$repo/releases/download/$tag/a-salah-theme.zip"
           notes=$(gh release view "$tag" --json body -q .body)
 
           python3 - "$tag" "$html_url" "$download_url" "$notes" <<'PY'
@@ -95,7 +99,7 @@ jobs:
               "body": notes,
               "assets": [
                   {
-                      "name": "a-salah.dev.zip",
+                      "name": "a-salah-theme.zip",
                       "browser_download_url": download_url,
                   }
               ],
